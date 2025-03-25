@@ -1,0 +1,59 @@
+body {
+    background-color: rgb(6, 6, 53);
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  .header {
+    align-items: center;
+  }
+
+  .white-rectangle {
+    background-color: rgb(255, 255, 255);
+    width: 20rem;
+    height: 7rem;
+    position: absolute;
+    bottom: 5%;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  
+  .left-rectangle {
+    left: 20%;
+  }
+  
+  .right-rectangle {
+    right: 20%;
+  }
+
+  .white-rectangle:hover {
+    background-color: #ffffff;
+    transform: scale(1.2)
+  }
+
+  .arrows {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15rem;
+      margin-top: 10rem;
+      margin-bottom: auto;
+  }
+  
