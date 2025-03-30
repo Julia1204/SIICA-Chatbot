@@ -1,59 +1,95 @@
 body {
-    background-color: rgb(6, 6, 53);
-    color: white;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  background-color: rgb(6, 6, 53);
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  h1 {
-    font-size: 4rem;
-    text-align: center;
-    margin-bottom: 20px;
-    color: white;
-  }
+h1 {
+  font-size: 4rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+}
 
-  .header {
-    align-items: center;
-  }
+.header {
+  align-items: center;
+}
 
-  .white-rectangle {
-    background-color: rgb(255, 255, 255);
-    width: 20rem;
-    height: 7rem;
-    position: absolute;
-    bottom: 5%;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-  }
+.white-rectangle {
+  background-color: #fff;
+  width: 15rem;
+  height: 5rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10%;
+}
+
+.white-rectangle:hover {
+  transform: scale(1.1);
+}
+
+.left-rectangle {
+  left: 20%;
+}
+
+.right-rectangle {
+  right: 20%;
+}
+
+.white-rectangle:hover {
+  background-color: #ffffff;
+  transform: scale(1.2)
+}
+
+.arrows {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
   
-  .left-rectangle {
-    left: 20%;
-  }
-  
-  .right-rectangle {
-    right: 20%;
-  }
+.left-arrow {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-  .white-rectangle:hover {
-    background-color: #ffffff;
-    transform: scale(1.2)
-  }
+.right-arrow {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-  .arrows {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15rem;
-      margin-top: 10rem;
-      margin-bottom: auto;
-  }
-  
+.choice-button {
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 15rem;
+  margin: 0 auto; 
+  transition: transform 0.3s ease;
+}
+
+.choice-button:hover {
+  transform: scale(1.05);
+}

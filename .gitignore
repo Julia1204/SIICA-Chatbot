@@ -11,6 +11,12 @@
 # production
 /build
 
+# exe file
+/dist/*
+# !dist/win-unpacked
+# /dist/win-unpacked/*
+# !dist/win-unpacked/siica-chatbot.exe
+
 # misc
 .DS_Store
 .env.local
