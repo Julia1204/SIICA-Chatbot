@@ -36,21 +36,12 @@ h1 {
   bottom: 10%;
 }
 
-.white-rectangle:hover {
-  transform: scale(1.1);
-}
-
 .left-rectangle {
   left: 20%;
 }
 
 .right-rectangle {
   right: 20%;
-}
-
-.white-rectangle:hover {
-  background-color: #ffffff;
-  transform: scale(1.2)
 }
 
 .arrows {
@@ -92,4 +83,19 @@ h1 {
 
 .choice-button:hover {
   transform: scale(1.05);
+}
+
+.highlight {
+  background-color: #4caf50 !important;
+  color: white;
+}
+
+.wrong-left,
+.wrong-right {
+  background-color: #f44336 !important;
+  color: white;
+}
+
+.step-counter {
+  margin: 1.5rem;
 }

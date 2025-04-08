@@ -5,6 +5,11 @@ const MultitaskingTest = () => {
   const [mode, setMode] = useState('');
   const [rule, setRule] = useState('');
   const [startTest, setStartTest] = useState(false);
+  const [step, setStep] = useState(0);
+  const [score, setScore] = useState(0);
+  const [highlight, setHighlight] = useState('');
+  const [lastClick, setLastClick] = useState('');
+
 
   const [arrowSide, setArrowSide] = useState('left');
   const [arrowDirection, setArrowDirection] = useState('left');
@@ -23,9 +28,26 @@ const MultitaskingTest = () => {
     }
   }, [startTest]);
 
-  const handleClick = () => {
-    generateTrial();
+  const handleClick = (side) => {
+    setLastClick(side);
+    setStep(prev => prev + 1);
+
+    const correctAnswer =
+      rule === 'side' ? arrowSide : arrowDirection;
+
+    if (side === correctAnswer) {
+      setScore(prev => prev + 1);
+      setHighlight(side);
+    } else {
+      setHighlight('wrong-' + side);
+    }
+
+    setTimeout(() => {
+      setHighlight('');
+      generateTrial();
+    }, 400);
   };
+
 
   if (!startTest) {
     return (
@@ -89,7 +111,7 @@ const MultitaskingTest = () => {
   return (
     <div className="header">
       <h1>{rule === 'side' ? 'Select SIDE' : 'Select DIRECTION'}</h1>
-
+      <h2 className='step-counter'> Step: {step}</h2>
       <div className="arrows">
         <img
           className={arrowSide === 'left' ? 'left-arrow' : 'right-arrow'}
@@ -101,20 +123,22 @@ const MultitaskingTest = () => {
           alt="arrow"
         />
       </div>
-
       <button
-        className="white-rectangle left-rectangle"
-        onClick={handleClick}
+        className={`white-rectangle left-rectangle ${highlight === 'left' ? 'highlight' : highlight === 'wrong-left' ? 'wrong-left' : ''
+          }`}
+        onClick={() => handleClick('left')}
       >
         Left
       </button>
 
       <button
-        className="white-rectangle right-rectangle"
-        onClick={handleClick}
+        className={`white-rectangle right-rectangle ${highlight === 'right' ? 'highlight' : highlight === 'wrong-right' ? 'wrong-right' : ''
+          }`}
+        onClick={() => handleClick('right')}
       >
         Right
       </button>
+
     </div>
   );
 };
