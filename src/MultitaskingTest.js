@@ -9,10 +9,17 @@ const MultitaskingTest = () => {
   const [score, setScore] = useState(0);
   const [highlight, setHighlight] = useState('');
   const [lastClick, setLastClick] = useState('');
-
-
   const [arrowSide, setArrowSide] = useState('left');
   const [arrowDirection, setArrowDirection] = useState('left');
+  const [startTime, setStartTime] = useState(null);
+  const [reactionTimes, setReactionTimes] = useState([]);
+  const [trialStart, setTrialStart] = useState(null);
+  const maxSteps = 15;
+  const [endTest, setEndTest] = useState(false);
+  const [testFinished, setTestFinished] = useState(false);
+  const [endTime, setEndTime] = useState(null);
+
+
 
   const generateTrial = () => {
     if (mode === 'multi') {
@@ -20,6 +27,7 @@ const MultitaskingTest = () => {
     }
     setArrowSide(Math.random() < 0.5 ? 'left' : 'right');
     setArrowDirection(Math.random() < 0.5 ? 'left' : 'right');
+    setTrialStart(Date.now());
   };
 
   useEffect(() => {
@@ -30,10 +38,11 @@ const MultitaskingTest = () => {
 
   const handleClick = (side) => {
     setLastClick(side);
-    setStep(prev => prev + 1);
 
-    const correctAnswer =
-      rule === 'side' ? arrowSide : arrowDirection;
+    const reactionTime = Date.now() - trialStart;
+    setReactionTimes(prev => [...prev, reactionTime]);
+
+    const correctAnswer = rule === 'side' ? arrowSide : arrowDirection;
 
     if (side === correctAnswer) {
       setScore(prev => prev + 1);
@@ -42,12 +51,37 @@ const MultitaskingTest = () => {
       setHighlight('wrong-' + side);
     }
 
+    const nextStep = step + 1;
+    setStep(nextStep);
+
     setTimeout(() => {
       setHighlight('');
-      generateTrial();
+
+      if (nextStep >= maxSteps) {
+        setEndTime(Date.now());
+        setTestFinished(true);
+      } else {
+        generateTrial();
+      }
     }, 400);
   };
 
+
+  if (testFinished) {
+    const totalTime = endTime - startTime; // w milisekundach
+    const averageReactionTime = totalTime / step;
+
+    return (
+      <div className="summary-container">
+        <h1>Podsumowanie</h1>
+        <div className="summary-stats">
+          <p><strong>Poprawne odpowiedzi:</strong> {score} / {step}</p>
+          <p><strong>Całkowity czas:</strong> {(totalTime / 1000).toFixed(2)} s</p>
+          <p><strong>Średni czas reakcji:</strong> {averageReactionTime.toFixed(0)} ms</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!startTest) {
     return (
@@ -58,6 +92,7 @@ const MultitaskingTest = () => {
             className="choice-button"
             onClick={() => {
               setMode('multi');
+              setStartTime(Date.now());
               setStartTest(true);
             }}
           >
@@ -87,6 +122,7 @@ const MultitaskingTest = () => {
                 className="choice-button"
                 onClick={() => {
                   setRule('side');
+                  setStartTime(Date.now());
                   setStartTest(true);
                 }}
               >
@@ -96,6 +132,7 @@ const MultitaskingTest = () => {
                 className="choice-button"
                 onClick={() => {
                   setRule('direction');
+                  setStartTime(Date.now());
                   setStartTest(true);
                 }}
               >
