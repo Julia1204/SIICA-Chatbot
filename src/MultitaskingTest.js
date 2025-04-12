@@ -18,10 +18,17 @@ const MultitaskingTest = () => {
   const [startTime, setStartTime] = useState(null);
   const [reactionTimes, setReactionTimes] = useState([]);
   const [trialStart, setTrialStart] = useState(null);
-  const maxSteps = 15;
   const [endTest, setEndTest] = useState(false);
   const [testFinished, setTestFinished] = useState(false);
   const [endTime, setEndTime] = useState(null);
+
+  const maxSteps = 15;
+
+  useEffect(() => {
+    if (startTest) {
+      generateTrial();
+    }
+  }, [startTest]);
 
   const generateTrial = () => {
     if (mode === "multi") {
@@ -32,20 +39,12 @@ const MultitaskingTest = () => {
     setTrialStart(Date.now());
   };
 
-  useEffect(() => {
-    if (startTest) {
-      generateTrial();
-    }
-  }, [startTest]);
-
   const handleClick = (side) => {
     setLastClick(side);
-
     const reactionTime = Date.now() - trialStart;
     setReactionTimes((prev) => [...prev, reactionTime]);
 
     const correctAnswer = rule === "side" ? arrowSide : arrowDirection;
-
     if (side === correctAnswer) {
       setScore((prev) => prev + 1);
       setHighlight(side);
@@ -58,7 +57,6 @@ const MultitaskingTest = () => {
 
     setTimeout(() => {
       setHighlight("");
-
       if (nextStep >= maxSteps) {
         setEndTime(Date.now());
         setTestFinished(true);
@@ -89,8 +87,8 @@ const MultitaskingTest = () => {
   const outerWrapperStyle = {
     width: "100vw",
     minHeight: "100vh",
-    margin: "0",
-    padding: "0",
+    margin: 0,
+    padding: 0,
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",
@@ -128,6 +126,7 @@ const MultitaskingTest = () => {
     bottom: "10%",
     left: "15%",
   };
+
   const rightRectanglePos = {
     position: "absolute",
     bottom: "10%",
@@ -141,7 +140,6 @@ const MultitaskingTest = () => {
     } else {
       style = { ...style, ...rightRectanglePos };
     }
-
     if (highlight === side) {
       style.backgroundColor = selectedColorScheme.highlightColor;
       style.color = selectedColorScheme.highlightTextColor;
@@ -158,11 +156,13 @@ const MultitaskingTest = () => {
     marginBottom: "20px",
     marginTop: "2rem",
   };
+
   const stepStyle = {
     color: selectedColorScheme.titleColor,
     margin: "1.5rem",
   };
 
+  // ====================== SUMMARY ======================
   if (testFinished) {
     const totalTime = endTime - startTime;
     const averageReactionTime = totalTime / step;
@@ -215,6 +215,7 @@ const MultitaskingTest = () => {
     );
   }
 
+  // ====================== START SCREEN ======================
   if (!startTest) {
     return (
       <div style={outerWrapperStyle}>
@@ -275,11 +276,9 @@ const MultitaskingTest = () => {
                 <h2 style={{ color: selectedColorScheme.titleColor }}>
                   {selectedLanguage.chooseRule}
                 </h2>
-
                 <p style={{ lineHeight: 1.4 }}>
                   {selectedLanguage.singleModeChoice}:
                 </p>
-
                 <button
                   style={baseButtonStyle}
                   onClick={() => {
@@ -308,6 +307,7 @@ const MultitaskingTest = () => {
     );
   }
 
+  // ====================== ACTIVE TEST SCREEN ======================
   return (
     <div style={outerWrapperStyle}>
       <div style={containerStyle}>
