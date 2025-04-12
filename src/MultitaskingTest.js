@@ -66,6 +66,24 @@ const MultitaskingTest = () => {
     }, 400);
   };
 
+  const resetTest = () => {
+    setMode('');
+    setRule('');
+    setStartTest(false);
+    setStep(0);
+    setScore(0);
+    setHighlight('');
+    setLastClick('');
+    setArrowSide('left');
+    setArrowDirection('left');
+    setStartTime(null);
+    setReactionTimes([]);
+    setTrialStart(null);
+    setEndTest(false);
+    setTestFinished(false);
+    setEndTime(null);
+  };
+
 
   if (testFinished) {
     const totalTime = endTime - startTime; // w milisekundach
@@ -79,6 +97,9 @@ const MultitaskingTest = () => {
           <p><strong>Całkowity czas:</strong> {(totalTime / 1000).toFixed(2)} s</p>
           <p><strong>Średni czas reakcji:</strong> {averageReactionTime.toFixed(0)} ms</p>
         </div>
+        <button className="choice-button" onClick={resetTest} style={{ marginTop: '2rem' }}>
+          Powrót
+        </button>
       </div>
     );
   }
