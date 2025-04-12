@@ -1,0 +1,60 @@
+{
+  "en": {
+    "name": "English",
+
+    "settings": "Settings",
+    "confirm": "Confirm",
+
+    "pickYourTestType": "Pick Your Test Type",
+    "multitaskingMode": "Multitasking Mode",
+    "multitaskingModeExplanation": "means the rule (side or direction) changes every trial",
+    "singleMode": "Single Mode",
+    "singleModeExplanation": "means you pick one rule for all trials",
+
+    "chooseRule": "Choose a rule for single mode:",
+    "singleModeChoice": "In single mode, you only respond to one rule (either side or direction). Please choose which",
+
+    "side": "Side",
+    "direction": "Direction",
+    "selectSide": "Select SIDE",
+    "selectDirection": "Select DIRECTION",
+    "step": "Step",
+    "left": "Left",
+    "right": "Right",
+
+    "summary": "Summary",
+    "rightAnswers": "Right answers",
+    "totalTime": "Total time",
+    "averageReactionTime": "Average reaction time",
+    "return": "Return"
+  },
+  "pl": {
+    "name": "Polski",
+
+    "settings": "Ustawienia",
+    "confirm": "Zatwierdź",
+
+    "pickYourTestType": "Wybierz rodzaj testu",
+    "multitaskingMode": "Tryb wielozadaniowy",
+    "multitaskingModeExplanation": "oznacza, że reguła (strona lub kierunek) zmienia się w każdej próbie",
+    "singleMode": "Tryb pojedynczy",
+    "singleModeExplanation": "oznacza wybranie jednej reguły dla wszystkich prób",
+
+    "chooseRule": "Wybierz zasadę w trybie pojedynczym:",
+    "singleModeChoice": "W trybie pojedynczym reagujesz tylko na jedną regułę (stronę lub kierunek). Wybierz, którą",
+
+    "side": "Strona",
+    "direction": "Kierunek",
+    "selectSide": "Wybierz STRONĘ",
+    "selectDirection": "Wybierz KIERUNEK",
+    "step": "Krok",
+    "left": "Lewo",
+    "right": "Prawo",
+
+    "summary": "Podsumowanie",
+    "rightAnswers": "Poprawne odpowiedzi",
+    "totalTime": "Całkowity czas",
+    "averageReactionTime": "Średni czas reakcji",
+    "return": "Powrót"
+  }
+}

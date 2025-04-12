@@ -8,8 +8,8 @@ import MultitaskingTest from './MultitaskingTest';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <MultitaskingTest />
+    <App />
+    {/* <MultitaskingTest /> */}
   </React.StrictMode>
 );
 

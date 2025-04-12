@@ -1,0 +1,53 @@
+{
+  "dark": {
+    "name": "Dark",
+    "backgroundColor": "rgb(6, 6, 53)",
+    "summaryBackgroundColor": "rgba(255, 255, 255, 0.1)",
+    "textColor": "#ffffff",
+
+    "titleColor": "#ffffff",
+    "buttonBackground": "#ffffff",
+    "buttonTextColor": "#000000",
+
+    "highlightColor": "#4caf50",
+    "highlightTextColor": "#ffffff",
+    "wrongColor": "#f44336",
+    "wrongTextColor": "#ffffff",
+
+    "arrowFilter": "invert(0)"
+  },
+  "light": {
+    "name": "Light",
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000",
+
+    "titleColor": "#000000",
+    "buttonBackground": "#eaeaea",
+    "summaryBackgroundColor": "rgba(0, 0, 0, 0.1)",
+    "buttonTextColor": "#000000",
+
+    "highlightColor": "#4caf50",
+    "highlightTextColor": "#ffffff",
+    "wrongColor": "#f44336",
+    "wrongTextColor": "#ffffff",
+
+    "arrowFilter": "invert(1)"
+  },
+  "daltonism": {
+    "name": "Daltonism",
+    "backgroundColor": "#2c2c2c",
+    "summaryBackgroundColor": "rgba(255, 255, 255, 0.1)",
+    "textColor": "#ffffff",
+
+    "titleColor": "#ffffff",
+    "buttonBackground": "#0072b2",
+    "buttonTextColor": "#ffffff",
+
+    "highlightColor": "#009e73",
+    "highlightTextColor": "#ffffff",
+    "wrongColor": "#d55e00",
+    "wrongTextColor": "#ffffff",
+
+    "arrowFilter": "invert(0)"
+  }
+}

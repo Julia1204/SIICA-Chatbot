@@ -51,7 +51,7 @@ h1 {
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
-  
+
 .left-arrow {
   position: absolute;
   left: 10%;
@@ -77,7 +77,7 @@ h1 {
   text-transform: uppercase;
   cursor: pointer;
   width: 15rem;
-  margin: 0 auto; 
+  margin: 0 auto;
   transition: transform 0.3s ease;
 }
 
@@ -121,4 +121,18 @@ h1 {
 
 .summary-stats p {
   margin: 1rem 0;
+}
+
+.settings-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.settings-icon:hover {
+  transform: scale(1.1);
 }
