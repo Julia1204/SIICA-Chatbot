@@ -26,7 +26,12 @@
     "rightAnswers": "Right answers",
     "totalTime": "Total time",
     "averageReactionTime": "Average reaction time",
-    "return": "Return"
+    "return": "Return",
+
+    "detailedResults": "Detailed Results",
+    "question": "Question",
+    "cell": "cell",
+    "reactionTime": "Reaction time"
   },
   "pl": {
     "name": "Polski",
@@ -55,6 +60,10 @@
     "rightAnswers": "Poprawne odpowiedzi",
     "totalTime": "Całkowity czas",
     "averageReactionTime": "Średni czas reakcji",
-    "return": "Powrót"
+    "return": "Powrót",
+    "detailedResults": "Szczegółowe wyniki",
+    "question": "Pytanie",
+    "cell": "pole",
+    "reactionTime": "czas reakcji"
   }
 }
