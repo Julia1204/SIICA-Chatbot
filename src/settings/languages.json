@@ -26,7 +26,14 @@
     "rightAnswers": "Right answers",
     "totalTime": "Total time",
     "averageReactionTime": "Average reaction time",
-    "return": "Return"
+    "return": "Return",
+
+    "detailedResults": "Detailed Results",
+    "numberQuestion": "Number of question",
+    "cell": "Place of the cursor at the start of the question",
+    "reactionTime": "Reaction time",
+    "middle": "Middle",
+    "correctAnswer": "Right answer"
   },
   "pl": {
     "name": "Polski",
@@ -55,6 +62,12 @@
     "rightAnswers": "Poprawne odpowiedzi",
     "totalTime": "Całkowity czas",
     "averageReactionTime": "Średni czas reakcji",
-    "return": "Powrót"
+    "return": "Powrót",
+    "detailedResults": "Szczegółowe wyniki",
+    "numberQuestion": "Numer pytania",
+    "cell": "Miejsce kursora przy rozpoczęciu pytania",
+    "reactionTime": "czas reakcji",
+    "middle": "Środek",
+    "correctAnswer": "Poprawna odpowiedź"
   }
 }

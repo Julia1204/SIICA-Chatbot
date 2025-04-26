@@ -1,24 +1,30 @@
 import React from "react";
 import "./App.css";
-import { HashRouter, Routes, Route } from "react-router-dom";
-import { SettingsProvider } from "./settings/SettingsContext";
+import {HashRouter, Routes, Route} from "react-router-dom";
+import {SettingsProvider} from "./settings/SettingsContext";
+import {GameProvider} from "./GameProvider";
 import SettingsPage from "./settings/SettingsPage";
-import MultitaskingTest from "./MultitaskingTest";
+import MultitaskingTest from "./games/MultitaskingTest";
+import GameSelectionPage from "./GameSelectionPage";
 
 function App() {
-  return (
-    <SettingsProvider>
-      <HashRouter>
-        <Routes>
-          {/* Main test screen */}
-          <Route path="/" element={<MultitaskingTest />} />
+    return (
+        <SettingsProvider>
+            <GameProvider>
+                <HashRouter>
+                    <Routes>
+                        <Route path="/" element={<GameSelectionPage />} />
+                        {/* Main test screen */}
+                        <Route path="/multitasking-game" element={<MultitaskingTest/>}/>
 
-          {/* Settings page */}
-          <Route path="/settings" element={<SettingsPage />} />
-        </Routes>
-      </HashRouter>
-    </SettingsProvider>
-  );
+                        {/* Settings page */}
+                        <Route path="/settings" element={<SettingsPage/>}/>
+                    </Routes>
+                </HashRouter>
+            </GameProvider>
+        </SettingsProvider>
+    );
 }
+
 
 export default App;
