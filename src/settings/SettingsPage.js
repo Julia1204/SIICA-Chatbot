@@ -29,7 +29,7 @@ const SettingsPage = () => {
   };
 
   const handleConfirm = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   return (
