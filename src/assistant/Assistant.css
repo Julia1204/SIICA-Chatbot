@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.assistant-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.eyes-container {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.eye {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.2);
+}
+
+.eye::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 35px;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: black;
+  border-radius: 50%;
+  border: 10px solid skyblue;
+}
+
+.chat-bubble {
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.input {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 300px;
+  font-size: 1rem;
+}
+
+.error {
+  color: #f44336;
+  margin-top: 0.5rem;
+}
+
+.next-btn, .choice-btn {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.next-btn:hover, .choice-btn:hover {
+  transform: scale(1.05);
+}
+
+.buttons-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}

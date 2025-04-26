@@ -5,7 +5,7 @@ import colorSchemes from "./colorSchemes.json";
 export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
-  const [languageKey, setLanguageKey] = useState("en");
+  const [languageKey, setLanguageKey] = useState("pl");
   const [colorSchemeKey, setColorSchemeKey] = useState("dark");
 
   const selectedLanguage = languages[languageKey];

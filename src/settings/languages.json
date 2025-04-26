@@ -36,7 +36,25 @@
     "correctAnswer": "Correct answer",
     "downloadPdf": "Download PDF",
     "selectedAnswer": "Selected Answer",
-    "report" : "Report of"
+    "report": "Report of",
+
+    "welcomeAssistant": "Welcome to our psychological support application.",
+    "enterUsername": "Please enter your username:",
+    "usernamePlaceholder": "Username",
+    "errorEnterUsername": "Please enter a username.",
+    "existingUsernameQuestion": "Username already exists. Is this you",
+    "yesContinue": "Yes, continue",
+    "noChange": "No, change username",
+    "fillSurveyQuestion": "Would you like to fill out a preliminary survey?",
+    "fillSurvey": "Yes, fill survey",
+    "skip": "Skip",
+    "settingsQuestion": "Would you like to adjust your account settings?",
+    "goToSettings": "Go to settings",
+    "chooseTestQuestion": "Please select the test you would like to start:",
+    "multitaskingTest": "Multitasking Test",
+    "stopTest": "Stop-Signal Test",
+    "litwTest": "Lab in the Wild Test",
+    "next": "Next"
   },
   "pl": {
     "name": "Polski",
@@ -75,6 +93,24 @@
     "correctAnswer": "Poprawna odpowiedź",
     "downloadPdf": "Pobierz PDF",
     "selectedAnswer": "Wybrana odpowiedź",
-    "report": "Raport użytkownika"
+    "report": "Raport użytkownika",
+
+    "welcomeAssistant": "Witamy w aplikacji wspierającej diagnozę psychologiczną.",
+    "enterUsername": "Proszę podać swoją nazwę użytkownika:",
+    "usernamePlaceholder": "Nazwa użytkownika",
+    "errorEnterUsername": "Proszę wprowadzić nazwę użytkownika.",
+    "existingUsernameQuestion": "Nazwa użytkownika już istnieje. Czy to Ty",
+    "yesContinue": "Tak, kontynuuj",
+    "noChange": "Nie, zmień nazwę",
+    "fillSurveyQuestion": "Czy chcesz wypełnić krótką ankietę wstępną?",
+    "fillSurvey": "Tak, wypełnij ankietę",
+    "skip": "Pomiń",
+    "settingsQuestion": "Czy chcesz przejść do ustawień konta?",
+    "goToSettings": "Przejdź do ustawień",
+    "chooseTestQuestion": "Proszę wybrać test, który chcesz rozpocząć:",
+    "multitaskingTest": "Test wielozadaniowości",
+    "stopTest": "Test sygnału stopu",
+    "litwTest": "Test Lab in the Wild",
+    "next": "Dalej"
   }
 }
