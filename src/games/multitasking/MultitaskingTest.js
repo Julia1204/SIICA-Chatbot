@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { SettingsContext } from '../../settings/SettingsContext';
-import { useGame } from '../../GameProvider';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {SettingsContext} from '../../settings/SettingsContext';
+import {useGame} from '../../GameProvider';
 import useMouseGrid from '../commonHooks/useMouseGrid';
-import { COLLECTIONS } from '../../firebase/firebaseCollections';
-import { addData } from '../../firebase/firebaseQueries';
+import {COLLECTIONS} from '../../firebase/firebaseCollections';
+import {addData} from '../../firebase/firebaseQueries';
 import StartScreen from './ui/components/StartScreen';
 import ActiveTest from './ui/components/ActiveTest';
 import SummaryScreen from './ui/components/SummaryScreen';
@@ -32,6 +32,7 @@ const MultitaskingTest = () => {
     const [testFinished, setTestFinished] = useState(false);
     const [correctSides, setCorrectSides] = useState([]);
     const [selectedSides, setSelectedSides] = useState([]);
+    const finishedDateRef = useRef(null);
     const [finishedDate, setFinishedDate] = useState(null);
 
     /* ==== REFS & HOOKS ==== */
@@ -65,9 +66,8 @@ const MultitaskingTest = () => {
         const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
         const avgRT = totalTime / reactionTimes.length;
 
-        const finished = new Date();
-        setFinishedDate(finished);
-
+        finishedDateRef.current = new Date();
+        setFinishedDate(finishedDateRef.current);
         const result = {
             userId: state.player.name,
             mode,
@@ -79,7 +79,7 @@ const MultitaskingTest = () => {
             averageReactionTime: avgRT,
             reactionTimes,
             cursorCells,
-            createdAt: finishedDate,
+            createdAt: finishedDateRef,
         };
 
         addData(COLLECTIONS.TEST_RESULTS, result)
@@ -141,6 +141,7 @@ const MultitaskingTest = () => {
         setCorrectSides([]);
         setSelectedSides([]);
         setFinishedDate(null);
+        finishedDateRef.current= null;
     };
 
     /* =============================================================
