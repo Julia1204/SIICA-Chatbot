@@ -13,10 +13,10 @@ export const fetchAll = async (collectionName) => {
 export const addData = async (collectionName, data) => {
     try {
         const docRef = await addDoc(collection(db, collectionName), data);
-        console.log("Dodano dokument z ID:", docRef.id);
+        console.log("Added document with ID:", docRef.id);
         return docRef.id;
     } catch (e) {
-        console.error("Błąd przy dodawaniu dokumentu:", e);
+        console.error("Error in adding document:", e);
         throw e;
     }
 };

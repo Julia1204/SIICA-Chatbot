@@ -17,10 +17,10 @@ const GameSelectionPage = () => {
         dispatch({ type: "START_GAME", payload: id });
         navigate(path);
     };
-
+// // do analizy gdzie język będzie wybierany !!!!!
     return (
         <div className="gsp-wrapper">
-            <h1 className="gsp-title">Wybierz grę</h1>   // do analizy gdzie język będzie wybierany !!!!!
+            <h1 className="gsp-title">Select game</h1>
 
             <div className="gsp-buttons">
                 {GAMES.map((game) => (
