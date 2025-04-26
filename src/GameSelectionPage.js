@@ -29,7 +29,7 @@ const GameSelectionPage = () => {
                         className="gsp-btn"
                         onClick={() => handleSelect(game)}
                     >
-                        {game.id} {/* lub tekst z i18n: selectedLanguage[game.labelKey] */}
+                        {game.id} {}
                     </button>
                 ))}
             </div>

@@ -4,7 +4,7 @@ import {HashRouter, Routes, Route} from "react-router-dom";
 import {SettingsProvider} from "./settings/SettingsContext";
 import {GameProvider} from "./GameProvider";
 import SettingsPage from "./settings/SettingsPage";
-import MultitaskingTest from "./games/MultitaskingTest";
+import MultitaskingTest from "./games/multitasking/MultitaskingTest";
 import GameSelectionPage from "./GameSelectionPage";
 
 function App() {

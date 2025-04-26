@@ -57,8 +57,10 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "main.js",
   "devDependencies": {
+    "@react-pdf/renderer": "^4.3.0",
     "electron": "^35.1.2",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "file-saver": "^2.0.5"
   },
   "repository": {
     "type": "git",

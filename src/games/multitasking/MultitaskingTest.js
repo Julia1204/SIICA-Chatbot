@@ -1,15 +1,23 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {Link} from "react-router-dom";
 import "./MultitaskingTest.css";
-import {SettingsContext} from "../settings/SettingsContext";
-import {COLLECTIONS} from '../firebase/firebaseCollections';
-import {addData} from '../firebase/firebaseQueries';
-import useMouseGrid from "../hooks/useMouseGrid";
+import {SettingsContext} from "../../settings/SettingsContext";
+import {COLLECTIONS} from '../../firebase/firebaseCollections';
+import {addData} from '../../firebase/firebaseQueries';
+import useMouseGrid from "../../hooks/useMouseGrid";
+import {makePdfBlob} from "./GenerateReport";
+import {saveAs} from "file-saver";
+import {useGame} from "../../GameProvider";
 
 const maxSteps = 15;
 
 const MultitaskingTest = () => {
     const {selectedLanguage, selectedColorScheme} = useContext(SettingsContext);
+    const {state, dispatch} = useGame();
+    // example how to use
+    // const x = state.player.name
+    //console.log(state.player.name);          // read
+    // dispatch({ type: "SET_PLAYER", payload: { name: "Anna" } }); // write
 
     const [mode, setMode] = useState("");
     const [rule, setRule] = useState("");
@@ -26,8 +34,9 @@ const MultitaskingTest = () => {
     const [testFinished, setTestFinished] = useState(false);
     const testAreaRef = useRef(null);
     const [correctSides, setCorrectSides] = useState([]);
-    const mouseGrid = useMouseGrid({ rows: 1, cols: 3, areaRef: testAreaRef });
-
+    const [selectedSides, setSelectedSides] = useState([]);
+    const [finishedDate, setFinishedDate] = useState(null)
+    const mouseGrid = useMouseGrid({rows: 1, cols: 3, areaRef: testAreaRef});
 
 
     useEffect(() => {
@@ -52,15 +61,19 @@ const MultitaskingTest = () => {
         if (!testFinished) return;
         const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
         const avgRT = totalTime / reactionTimes.length;
+        setFinishedDate(new Date())
         const result = {
-            userId: "USER_ID",
-            mode, rule, score,
+            userId: state.player.name,
+            mode,
+            rule,
+            score,
             correctSides,
+            selectedSides,
             totalTime,
             averageReactionTime: avgRT,
             reactionTimes,
             cursorCells,
-            createdAt: new Date()
+            createdAt: finishedDate,
         };
         addData(COLLECTIONS.TEST_RESULTS, result)
             .then(id => console.log("Zapisano:", id))
@@ -75,6 +88,7 @@ const MultitaskingTest = () => {
         setReactionTimes(prev => [...prev, rt]);
         const correct = rule === "side" ? arrowSide : arrowDirection;
         setCorrectSides(prev => [...prev, correct]);
+        setSelectedSides(prev => [...prev, side]);
         setScore(prev => prev + (side === correct ? 1 : 0));
         setHighlight(side === correct ? side : "wrong-" + side);
 
@@ -108,6 +122,9 @@ const MultitaskingTest = () => {
         setTrialStart(null);
         setIsWaiting(false);
         setTestFinished(false);
+        setCorrectSides([]);
+        setSelectedSides([]);
+        setFinishedDate(null);
     };
 
     const outer = {
@@ -134,28 +151,28 @@ const MultitaskingTest = () => {
     };
     const posLeft = {position: "absolute", bottom: "10%", left: "15%"};
     const posRight = {position: "absolute", bottom: "10%", right: "15%"};
-    const btnWidth   = '25%';     // 1/4 szerokości ekranu
-    const sideGap    = '8.3333%'; // 1/12 = odstęp od krawędzi
+    const btnWidth = '25%';
+    const sideGap = '8.3333%';
 
     const getBtn = side => {
         const s = {
             ...baseBtn,
             position: 'absolute',
-            bottom:   '2rem',
+            bottom: '2rem',
 
-            /* Ustawienie w poziomie */
+
             width: btnWidth,
-            left : side === 'left' ? sideGap      // lewy przycisk
-                : '66.6667%',  // prawy zaczyna się w 2/3 szerokości
+            left: side === 'left' ? sideGap
+                : '66.6667%',
         };
 
-        /* Kolorowanie poprawnej / błędnej odpowiedzi */
+
         if (highlight === side) {
             s.backgroundColor = selectedColorScheme.highlightColor;
-            s.color           = selectedColorScheme.highlightTextColor;
+            s.color = selectedColorScheme.highlightTextColor;
         } else if (highlight === 'wrong-' + side) {
             s.backgroundColor = selectedColorScheme.wrongColor;
-            s.color           = selectedColorScheme.wrongTextColor;
+            s.color = selectedColorScheme.wrongTextColor;
         }
 
         return s;
@@ -175,24 +192,24 @@ const MultitaskingTest = () => {
     // ======== SUMMARY ========
     if (testFinished) {
         const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
-        const avgRT     = totalTime / reactionTimes.length;
+        const avgRT = totalTime / reactionTimes.length;
 
         /* ———  STYLE HELPERS  ——— */
-        const card   = {
+        const card = {
             backgroundColor: selectedColorScheme.summaryBackgroundColor,
-            borderRadius:   20,
-            padding:        "2rem 3rem",
-            maxWidth:       600,
-            width:          "90%",
-            boxShadow:      "0 4px 8px rgba(0,0,0,.15)"
+            borderRadius: 20,
+            padding: "2rem 3rem",
+            maxWidth: 600,
+            width: "90%",
+            boxShadow: "0 4px 8px rgba(0,0,0,.15)"
         };
         const statTable = {
-            width:  "100%",
+            width: "100%",
             borderCollapse: "collapse",
             fontSize: "1.4rem"
         };
-        const th = { textAlign: "left", padding: "0.3rem 0" };
-        const td = { textAlign: "right", fontWeight: 700 };
+        const th = {textAlign: "left", padding: "0.3rem 0"};
+        const td = {textAlign: "right", fontWeight: 700};
 
         const detailWrap = {
             maxHeight: 260,
@@ -207,7 +224,7 @@ const MultitaskingTest = () => {
             fontSize: "1rem"
         };
         const zebra = (i) =>
-            ({ backgroundColor: i % 2 ? "transparent" : `${selectedColorScheme.textColor}0D` });
+            ({backgroundColor: i % 2 ? "transparent" : `${selectedColorScheme.textColor}0D`});
 
         const cellLabel = c =>
             c === 1 ? selectedLanguage.left
@@ -215,17 +232,33 @@ const MultitaskingTest = () => {
                     : selectedLanguage.right;
 
         const sideLabel = s =>
-            s === 'left'  ? selectedLanguage.left
+            s === 'left' ? selectedLanguage.left
                 : s === 'right' ? selectedLanguage.right
                     : selectedLanguage.middle;
 
+        const tableRows = cursorCells.map((cell, i) => ({
+            nr:      i + 1,
+            cell:    cellLabel(cell),
+            select:  sideLabel(selectedSides[i]),
+            correct: sideLabel(correctSides[i]),
+            rt:      reactionTimes[i] + ' ms',
+        }));
+
+        const headers = {
+            nr:      selectedLanguage.numberQuestion,
+            cell:    selectedLanguage.cell,
+            select:  selectedLanguage.selectedAnswer,
+            correct: selectedLanguage.correctAnswer,
+            rt:      `${selectedLanguage.reactionTime} (ms)`,
+        };
+
         return (
             <div style={sumCont}>
-                <h1 style={{ color: selectedColorScheme.titleColor }}>
+                <h1 style={{color: selectedColorScheme.titleColor}}>
                     {selectedLanguage.summary}
                 </h1>
 
-                {/* ——  KARTA STATYSTYK  —— */}
+                {/* ——  STATS CARD —— */}
                 <div style={card}>
                     <table style={statTable}>
                         <tbody>
@@ -245,8 +278,8 @@ const MultitaskingTest = () => {
                     </table>
                 </div>
 
-                {/* ——  SZCZEGÓŁOWA TABELA  —— */}
-                <h2 style={{ marginTop: "2rem", color: selectedColorScheme.titleColor }}>
+                {/* ——  DETAILS TABLE —— */}
+                <h2 style={{marginTop: "2rem", color: selectedColorScheme.titleColor}}>
                     {selectedLanguage.detailedResults}
                 </h2>
 
@@ -255,11 +288,13 @@ const MultitaskingTest = () => {
                         <thead>
                         <tr>
                             <th style={{
-                                padding: "0.4rem 0.6rem",
-                                textAlign: "left"
+                                padding: "0.4rem 0.6rem", textAlign: "left"
                             }}>{selectedLanguage.numberQuestion}</th>
                             <th style={{padding: "0.4rem 0.6rem", textAlign: "left"}}>
                                 {selectedLanguage.cell}
+                            </th>
+                            <th style={{padding: "0.4rem 0.6rem", textAlign: "left"}}>
+                                {selectedLanguage.selectedAnswer}
                             </th>
                             <th style={{padding: "0.4rem 0.6rem", textAlign: "left"}}>
                                 {selectedLanguage.correctAnswer}
@@ -274,16 +309,30 @@ const MultitaskingTest = () => {
                             <tr key={i} style={zebra(i)}>
                                 <td>{i + 1}</td>
                                 <td>{cellLabel(cell)}</td>
-                                {/* 1/2/3 → tekst */}
+                                <td>{sideLabel(selectedSides[i])}</td>
+                                {/* 1/2/3 → text */}
                                 <td>{sideLabel(correctSides[i])}</td>
-                                {/* left/right → tekst */}
+                                {/* left/right → text */}
                                 <td>{reactionTimes[i]}</td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
                 </div>
-
+                <button
+                    style={{...baseBtn, marginTop: "2rem"}}
+                    onClick={async () => {
+                        try {
+                            const timestamp = finishedDate.getTime();
+                            const blob = await makePdfBlob({headers, rows: tableRows, title: `${selectedLanguage.report} ${state.player.name}: ${finishedDate.toLocaleDateString()}`});
+                            saveAs(blob, `report_${state.player.name}_${timestamp}.pdf`);
+                        } catch (e) {
+                            console.error("PDF error", e);
+                        }
+                    }}
+                >
+                    ⬇️ {selectedLanguage.downloadPdf}
+                </button>
                 <button style={{...baseBtn, marginTop: "2.5rem"}} onClick={resetTest}>
                     {selectedLanguage.return}
                 </button>
@@ -373,7 +422,7 @@ const MultitaskingTest = () => {
                         alt="arrow"
                     />
                 </div>
-                <button style={getBtn('left')}  onClick={() => handleClick('left')}>
+                <button style={getBtn('left')} onClick={() => handleClick('left')}>
                     {selectedLanguage.left}
                 </button>
                 <button style={getBtn('right')} onClick={() => handleClick('right')}>
