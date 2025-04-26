@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
 
-// do analizy czy jest potrzebny
+// to analise is it needed?
 const initialState = {
     player: { name: "Test_User" },
     currentGame: null,
