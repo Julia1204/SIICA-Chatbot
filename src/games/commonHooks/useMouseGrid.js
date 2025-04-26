@@ -1,4 +1,4 @@
-import {useRef, useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 const useMouseGrid = ({rows, cols, areaRef}) => {
     const mousePos = useRef({x: 0, y: 0});
@@ -9,7 +9,7 @@ const useMouseGrid = ({rows, cols, areaRef}) => {
         return () => window.removeEventListener("mousemove", handle);
     }, []);
 
-    const mapToCell = () => {
+    return () => {
         if (!areaRef.current) return 0;
         const area = areaRef.current.getBoundingClientRect();
         const xRel = mousePos.current.x - area.left;
@@ -18,10 +18,8 @@ const useMouseGrid = ({rows, cols, areaRef}) => {
         const cellH = area.height / rows;
         const col = Math.min(cols - 1, Math.max(0, Math.floor(xRel / cellW)));
         const row = Math.min(rows - 1, Math.max(0, Math.floor(yRel / cellH)));
-        return row * cols + col + 1; 
+        return row * cols + col + 1;
     };
-
-    return mapToCell;
 }
 
 export default useMouseGrid;
