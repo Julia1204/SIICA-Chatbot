@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { SettingsContext } from '../../settings/SettingsContext';
 import { useGame } from '../../GameProvider';
-import useMouseGrid from '../../hooks/useMouseGrid';
+import useMouseGrid from '../commonHooks/useMouseGrid';
 import { COLLECTIONS } from '../../firebase/firebaseCollections';
 import { addData } from '../../firebase/firebaseQueries';
 import StartScreen from './ui/components/StartScreen';
