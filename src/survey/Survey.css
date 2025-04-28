@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.chat-bubble {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.survey-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.survey-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.survey-group {
+  width: 100%;
+  max-width: 20rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.survey-group label {
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: inherit;
+  text-align: left;
+}
+
+.survey-group textarea.input {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+}
+
+.next-btn {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  background-color: #eee;
+}
+
+.next-btn:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: #c00;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

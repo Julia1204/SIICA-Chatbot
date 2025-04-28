@@ -6,6 +6,7 @@ import { GameProvider } from "./GameProvider";
 import Assistant from "./assistant/Assistant";
 import SettingsPage from "./settings/SettingsPage";
 import MultitaskingTest from "./games/multitasking/MultitaskingTest";
+import Survey from "./survey/Survey";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
             <Route path="/multitasking" element={<MultitaskingTest />} />
             {/* Settings */}
             <Route path="/settings" element={<SettingsPage />} />
-
+            {/* Survey */}
+            <Route path="/survey" element={<Survey />} />
             {/* <Route path="/" element={<GameSelectionPage />} /> */}
           </Routes>
         </HashRouter>
