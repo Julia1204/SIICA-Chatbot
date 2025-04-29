@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { SettingsContext } from "../settings/SettingsContext";
-import { useGame } from "../GameProvider";
 import { AnimatePresence, motion } from "framer-motion";
 import "./Survey.css";
+import { db } from "../firebase/firebaseConfig";
+import { collection, doc, setDoc } from "firebase/firestore";
 
-const SurveyPage = () => {
+const Survey = () => {
   const { selectedColorScheme, selectedLanguage } = useContext(SettingsContext);
-  const { state } = useGame();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -25,6 +25,21 @@ const SurveyPage = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const required = ["age", "gender", "device", "takenBefore", "frequency"];
+  //   if (required.some((f) => !form[f])) {
+  //     setError(selectedLanguage.errorRequired ?? "Uzupełnij wymagane pola");
+  //     return;
+  //   }
+  //   try {
+  //     navigate("/?step=4");
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError(selectedLanguage.errorSave ?? "Błąd zapisu, spróbuj ponownie");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const required = ["age", "gender", "device", "takenBefore", "frequency"];
@@ -33,7 +48,13 @@ const SurveyPage = () => {
       return;
     }
     try {
-      // tu przywróć addData / addDoc do bazy
+      const surveysCol = collection(db, "surveys");
+      const surveyRef = doc(surveysCol);
+      await setDoc(surveyRef, {
+        id: surveyRef.id,
+        userId: "julia",
+        ...form,
+      });
       navigate("/?step=4");
     } catch (err) {
       console.error(err);
@@ -68,9 +89,7 @@ const SurveyPage = () => {
 
           <form className="survey-form" onSubmit={handleSubmit}>
             <div className="survey-group">
-              <label htmlFor="age">
-                {selectedLanguage.ageLabel ?? "Wiek"}
-              </label>
+              <label htmlFor="age">{selectedLanguage.ageLabel ?? "Wiek"}</label>
               <input
                 className="input"
                 type="number"
@@ -95,18 +114,14 @@ const SurveyPage = () => {
                 value={form.gender}
                 onChange={handleChange}
               >
-                <option value="">
-                  {selectedLanguage.select ?? "Wybierz"}
-                </option>
+                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
                 <option value="female">
                   {selectedLanguage.female ?? "Kobieta"}
                 </option>
                 <option value="male">
                   {selectedLanguage.male ?? "Mężczyzna"}
                 </option>
-                <option value="na">
-                  {selectedLanguage.na ?? "inne"}
-                </option>
+                <option value="na">{selectedLanguage.na ?? "inne"}</option>
               </select>
             </div>
 
@@ -121,9 +136,7 @@ const SurveyPage = () => {
                 value={form.device}
                 onChange={handleChange}
               >
-                <option value="">
-                  {selectedLanguage.select ?? "Wybierz"}
-                </option>
+                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
                 <option value="mouse">
                   {selectedLanguage.mouse ?? "Mysz"}
                 </option>
@@ -138,8 +151,7 @@ const SurveyPage = () => {
 
             <div className="survey-group">
               <label htmlFor="additionalInfo">
-                {selectedLanguage.additionalInfoLabel ??
-                  "Dodatkowe informacje"}
+                {selectedLanguage.additionalInfoLabel ?? "Dodatkowe informacje"}
               </label>
               <textarea
                 className="input"
@@ -167,9 +179,7 @@ const SurveyPage = () => {
                 value={form.takenBefore}
                 onChange={handleChange}
               >
-                <option value="">
-                  {selectedLanguage.select ?? "Wybierz"}
-                </option>
+                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
                 <option value="yes">{selectedLanguage.yes ?? "Tak"}</option>
                 <option value="no">{selectedLanguage.no ?? "Nie"}</option>
               </select>
@@ -186,20 +196,19 @@ const SurveyPage = () => {
                 value={form.frequency}
                 onChange={handleChange}
               >
-                <option value="">
-                  {selectedLanguage.select ?? "Wybierz"}
-                </option>
+                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
                 <option value="daily">
                   {selectedLanguage.daily ?? "Codziennie"}
                 </option>
                 <option value="few_times_week">
-                  {selectedLanguage.fewTimesWeek ??
-                    "Kilka razy w tygodniu"}
+                  {selectedLanguage.fewTimesWeek ?? "Kilka razy w tygodniu"}
                 </option>
                 <option value="weekly">
                   {selectedLanguage.weekly ?? "Raz w tygodniu"}
                 </option>
-                <option value="rarely">{selectedLanguage.rarely ?? "Rzadko"}</option>
+                <option value="rarely">
+                  {selectedLanguage.rarely ?? "Rzadko"}
+                </option>
               </select>
             </div>
 
@@ -215,4 +224,4 @@ const SurveyPage = () => {
   );
 };
 
-export default SurveyPage;
+export default Survey;
