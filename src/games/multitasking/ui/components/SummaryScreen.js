@@ -1,6 +1,7 @@
 import React from "react";
 import { saveAs } from "file-saver";
 import { makePdfBlob } from "../../GenerateReport";
+import { useNavigate } from "react-router-dom";
 
 const SummaryScreen = ({
   selectedLanguage,
@@ -15,7 +16,7 @@ const SummaryScreen = ({
   state,
   resetTest,
 }) => {
-  /* ===== Helpers ===== */
+  const navigate = useNavigate();
   const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
   const avgRT = totalTime / reactionTimes.length;
 
@@ -49,7 +50,6 @@ const SummaryScreen = ({
     rt: `${selectedLanguage.reactionTime} (ms)`,
   };
 
-  /* ===== Styles ===== */
   const outer = {
     width: "100vw",
     minHeight: "100vh",
@@ -106,7 +106,6 @@ const SummaryScreen = ({
         {selectedLanguage.summary}
       </h1>
 
-      {/* Stats */}
       <div style={card}>
         <table style={statTable}>
           <tbody>
@@ -128,7 +127,6 @@ const SummaryScreen = ({
         </table>
       </div>
 
-      {/* Details */}
       <h2 style={{ marginTop: "2rem", color: selectedColorScheme.titleColor }}>
         {selectedLanguage.detailedResults}
       </h2>
@@ -168,7 +166,6 @@ const SummaryScreen = ({
         </table>
       </div>
 
-      {/* Buttons */}
       <button
         style={{
           backgroundColor: selectedColorScheme.buttonBackground,
@@ -202,24 +199,66 @@ const SummaryScreen = ({
         ⬇️ {selectedLanguage.downloadPdf}
       </button>
 
-      <button
+      <div
         style={{
-          backgroundColor: selectedColorScheme.buttonBackground,
-          color: selectedColorScheme.buttonTextColor,
-          width: "15rem",
-          height: "5rem",
-          borderRadius: "20px",
-          fontSize: "1.2rem",
-          fontWeight: "bold",
-          textTransform: "uppercase",
-          border: "none",
-          marginTop: "2.5rem",
-          cursor: "pointer",
+          marginTop: "2rem",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "1rem",
+          justifyContent: "center",
         }}
-        onClick={resetTest}
       >
-        {selectedLanguage.return}
-      </button>
+        <button
+          style={{
+            backgroundColor: selectedColorScheme.buttonBackground,
+            color: selectedColorScheme.buttonTextColor,
+            width: "15rem",
+            height: "4rem",
+            borderRadius: "20px",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/?step=1")}
+        >
+          👤 {selectedLanguage.backToUsername}
+        </button>
+
+        <button
+          style={{
+            backgroundColor: selectedColorScheme.buttonBackground,
+            color: selectedColorScheme.buttonTextColor,
+            width: "15rem",
+            height: "4rem",
+            borderRadius: "20px",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/survey")}
+        >
+          🔁 {selectedLanguage.backToSurvey}
+        </button>
+
+        <button
+          style={{
+            backgroundColor: selectedColorScheme.buttonBackground,
+            color: selectedColorScheme.buttonTextColor,
+            width: "15rem",
+            height: "4rem",
+            borderRadius: "20px",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/?step=4")}
+        >
+          🎮 {selectedLanguage.chooseAnotherTest}
+        </button>
+      </div>
     </div>
   );
 };

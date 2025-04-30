@@ -71,14 +71,6 @@ const Assistant = () => {
     }
   };
 
-  const handleSettingsChoice = (fill) => {
-    if (fill) {
-      navigate("/settings");
-    } else {
-      navigate("/?step=5");
-    }
-  };
-
   const handleGameSelect = (game) => {
     navigate("/" + game);
   };
@@ -114,7 +106,10 @@ const Assistant = () => {
       case 1:
         return (
           <>
-            <p>{selectedLanguage.enterUsername}</p>
+            <p>
+              {selectedLanguage.enterUsername}{" "}
+              <span className="required">*</span>
+            </p>
             <input
               className="input"
               value={username}
@@ -173,46 +168,43 @@ const Assistant = () => {
       case 4:
         return (
           <>
-            <p>{selectedLanguage.settingsQuestion}</p>
-            <div className="buttons-row">
-              <button
-                className="choice-btn"
-                onClick={() => handleSettingsChoice(true)}
-              >
-                {selectedLanguage.goToSettings}
-              </button>
-              <button
-                className="choice-btn"
-                onClick={() => handleSettingsChoice(false)}
-              >
-                {selectedLanguage.skip}
-              </button>
-            </div>
-          </>
-        );
-      case 5:
-        return (
-          <>
             <p>{selectedLanguage.chooseTestQuestion}</p>
             <div className="buttons-row">
-              <button
-                className="choice-btn"
-                onClick={() => handleGameSelect("multitasking")}
-              >
-                {selectedLanguage.multitaskingTest}
-              </button>
-              <button
-                className="choice-btn"
-                onClick={() => handleGameSelect("stop")}
-              >
-                {selectedLanguage.stopTest}
-              </button>
-              <button
-                className="choice-btn"
-                onClick={() => handleGameSelect("litw")}
-              >
-                {selectedLanguage.litwTest}
-              </button>
+              <div className="tooltip-wrapper">
+                <button
+                  className="choice-btn"
+                  onClick={() => handleGameSelect("multitasking")}
+                >
+                  {selectedLanguage.multitaskingTest}
+                </button>
+                <span className="tooltip">
+                  {selectedLanguage.multitaskingDescription}
+                </span>
+              </div>
+
+              <div className="tooltip-wrapper">
+                <button
+                  className="choice-btn"
+                  onClick={() => handleGameSelect("stop")}
+                >
+                  {selectedLanguage.stopTest}
+                </button>
+                <span className="tooltip">
+                  {selectedLanguage.stopDescription}
+                </span>
+              </div>
+
+              <div className="tooltip-wrapper">
+                <button
+                  className="choice-btn"
+                  onClick={() => handleGameSelect("litw")}
+                >
+                  {selectedLanguage.litwTest}
+                </button>
+                <span className="tooltip">
+                  {selectedLanguage.litwDescription}
+                </span>
+              </div>
             </div>
           </>
         );

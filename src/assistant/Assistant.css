@@ -88,3 +88,39 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.tooltip-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  position: absolute;
+  top: 100%; 
+  margin-top: 0rem;
+  z-index: 99;
+  transition: opacity 0.3s;
+  width: 200px;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.tooltip-wrapper:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}
+

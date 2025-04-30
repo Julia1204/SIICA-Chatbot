@@ -74,7 +74,6 @@ const StartScreen = ({
             alignItems: "center",
           }}
         >
-          {/* MULTI MODE */}
           <button
             style={baseBtn}
             onClick={() => {
@@ -85,7 +84,6 @@ const StartScreen = ({
             {selectedLanguage.multitaskingMode}
           </button>
 
-          {/* SINGLE MODE SELECTION */}
           <button style={baseBtn} onClick={() => setMode("single")}>
             {selectedLanguage.singleMode}
           </button>

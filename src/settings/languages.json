@@ -3,7 +3,13 @@
     "name": "English",
 
     "settings": "Settings",
+    "home": "Home",
+    "about": "About",
     "confirm": "Confirm",
+
+    "multitaskingDescription": "The test measures reaction time and number of errors when responding to arrows appearing on the left or right side of the screen, according to a randomly changing rule (direction or side). Useful for assessing cognitive function in brain injury, autism or Down syndrome.",
+    "stopDescription": "The test assesses the ability to inhibit the response - the user should react to the direction of the arrow unless he or she hears an audible signal. Used in the diagnosis of ADHD and OCD.",
+    "litwDescription": "The test examines the ability to perform two tasks simultaneously - shape recognition and sequence memory. It measures the effect of multitasking on attention and short-term memory.",
 
     "pickYourTestType": "Pick Your Test Type",
     "multitaskingMode": "Multitasking Mode",
@@ -28,6 +34,15 @@
     "averageReactionTime": "Average reaction time",
     "return": "Return",
 
+    "aboutTitle": "About the Project",
+    "aboutProjectText": "This project was created as part of the 'Artificial Intelligence and Digital Assistants' course at Wrocław University of Science and Technology. Its goal is to develop a chatbot-based diagnostic tool supporting the evaluation of cognitive functions through decision-making games inspired by neuropsychological tests. The application includes an adaptive interface, multilingual support, and real-time report generation.",
+    "team": "Project team",
+    "supervisor": "Supervisor",
+    "courseName": "Artificial Intelligence and Digital Assistants",
+    "faculty": "ITE, Faculty of Computer Science and Management",
+    "contact": "Contact",
+    "university": "Wrocław University of Science and Technology",
+
     "detailedResults": "Detailed Results",
     "numberQuestion": "Number of question",
     "cell": "Place of the cursor at the start of the question",
@@ -37,6 +52,31 @@
     "downloadPdf": "Download PDF",
     "selectedAnswer": "Selected Answer",
     "report": "Report of",
+
+    "surveyTitle": "Survey",
+    "ageLabel": "Age",
+    "genderLabel": "Gender",
+    "deviceLabel": "Input device used",
+    "additionalInfoLabel": "Additional information",
+    "additionalInfoPlaceholder": "Diseases, disabilities, remarks...",
+    "takenBeforeLabel": "Have you taken part in the study before?",
+    "frequencyLabel": "How often do you play?",
+    "female": "Female",
+    "male": "Male",
+    "na": "Other / Prefer not to say",
+    "mouse": "Mouse",
+    "touchpad": "Touchpad",
+    "other": "Other",
+    "select": "Select",
+    "yes": "Yes",
+    "no": "No",
+    "daily": "Daily",
+    "fewTimesWeek": "A few times a week",
+    "weekly": "Once a week",
+    "rarely": "Rarely",
+    "submit": "Submit",
+    "errorRequired": "Please complete all required fields.",
+    "errorSave": "Save error. Please try again.",
 
     "welcomeAssistant": "Welcome to our psychological support application.",
     "enterUsername": "Please enter your username:",
@@ -54,13 +94,32 @@
     "multitaskingTest": "Multitasking Test",
     "stopTest": "Stop-Signal Test",
     "litwTest": "Lab in the Wild Test",
-    "next": "Next"
+    "next": "Next",
+
+    "backToUsername": "Change Username",
+    "backToSurvey": "Change The Data In The Survey",
+    "chooseAnotherTest": "Choose Another Test"
   },
   "pl": {
     "name": "Polski",
 
     "settings": "Ustawienia",
+    "home": "Strona główna",
+    "about": "O nas",
     "confirm": "Zatwierdź",
+
+    "aboutTitle": "O projekcie",
+    "aboutProjectText": "Projekt został zrealizowany w ramach przedmiotu 'Sztuczna Inteligencja i Cyfrowi Asystenci' na Politechnice Wrocławskiej. Celem projektu jest stworzenie narzędzia diagnostycznego w formie chatbota, wspomagającego ocenę funkcji poznawczych poprzez gry decyzyjne inspirowane testami neuropsychologicznymi. Aplikacja posiada elastyczny interfejs, obsługę wielu języków oraz możliwość generowania raportów diagnostycznych.",
+    "team": "Zespół projektowy",
+    "supervisor": "Prowadzący",
+    "courseName": "Sztuczna Inteligencja i Cyfrowi Asystenci",
+    "faculty": "ITE, Wydział Informatyki i Zarządzania",
+    "contact": "Kontakt",
+    "university": "Politechnika Wrocławska",
+
+    "multitaskingDescription": "Test mierzy czas reakcji i liczbę błędów podczas reagowania na strzałki pojawiające się po lewej lub prawej stronie ekranu, zgodnie z losowo zmieniającą się regułą (kierunek lub strona). Przydatny w ocenie funkcji poznawczych przy urazach mózgu, autyzmie lub zespole Downa.",
+    "stopDescription": "Test ocenia zdolność hamowania reakcji - użytkownik powinien zareagować na kierunek strzałki, chyba że usłyszy sygnał dźwiękowy. Wykorzystywany w diagnostyce ADHD i OCD.",
+    "litwDescription": "Test bada zdolność do wykonywania dwóch zadań jednocześnie - rozpoznawania kształtów i zapamiętywania sekwencji. Mierzy wpływ wielozadaniowości na uwagę i pamięć krótkotrwałą.",
 
     "pickYourTestType": "Wybierz rodzaj testu",
     "multitaskingMode": "Tryb wielozadaniowy",
@@ -95,6 +154,31 @@
     "selectedAnswer": "Wybrana odpowiedź",
     "report": "Raport użytkownika",
 
+    "surveyTitle": "Ankieta",
+    "ageLabel": "Wiek",
+    "genderLabel": "Płeć",
+    "deviceLabel": "Używane urządzenie wskazujące",
+    "additionalInfoLabel": "Dodatkowe informacje",
+    "additionalInfoPlaceholder": "Choroby, dysfunkcje, uwagi...",
+    "takenBeforeLabel": "Brałeś(aś) udział wcześniej?",
+    "frequencyLabel": "Jak często grasz?",
+    "female": "Kobieta",
+    "male": "Mężczyzna",
+    "na": "Inna / wolę nie mówić",
+    "mouse": "Mysz",
+    "touchpad": "Touchpad",
+    "other": "Inne",
+    "select": "Wybierz",
+    "yes": "Tak",
+    "no": "Nie",
+    "daily": "Codziennie",
+    "fewTimesWeek": "Kilka razy w tygodniu",
+    "weekly": "Raz w tygodniu",
+    "rarely": "Rzadko",
+    "submit": "Wyślij",
+    "errorRequired": "Uzupełnij wszystkie wymagane pola.",
+    "errorSave": "Błąd zapisu. Spróbuj ponownie.",
+
     "welcomeAssistant": "Witamy w aplikacji wspierającej diagnozę psychologiczną.",
     "enterUsername": "Proszę podać swoją nazwę użytkownika:",
     "usernamePlaceholder": "Nazwa użytkownika",
@@ -111,6 +195,10 @@
     "multitaskingTest": "Test wielozadaniowości",
     "stopTest": "Test sygnału stopu",
     "litwTest": "Test Lab in the Wild",
-    "next": "Dalej"
+    "next": "Dalej",
+
+    "backToUsername": "Zmień nazwę",
+    "backToSurvey": "Zmień dane w ankiecie",
+    "chooseAnotherTest": "Wybierz inny test"
   }
 }

@@ -1,0 +1,51 @@
+.about-wrapper {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.about-text {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.about-section-title {
+  font-weight: bold;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+.about-names {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.about-details {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.about-contact {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+
+.about-mail {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.about-mail:hover {
+  text-decoration: underline;
+}
+

@@ -7,12 +7,15 @@ import Assistant from "./assistant/Assistant";
 import SettingsPage from "./settings/SettingsPage";
 import MultitaskingTest from "./games/multitasking/MultitaskingTest";
 import Survey from "./survey/Survey";
+import Navbar from "./navbar/Navbar";
+import AboutPage from "./navbar/AboutPage";
 
 function App() {
   return (
     <SettingsProvider>
       <GameProvider>
         <HashRouter>
+          <Navbar />
           <Routes>
             <Route path="/" element={<Assistant />} />
             {/* Games */}
@@ -21,7 +24,8 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             {/* Survey */}
             <Route path="/survey" element={<Survey />} />
-            {/* <Route path="/" element={<GameSelectionPage />} /> */}
+            {/* About */}
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </HashRouter>
       </GameProvider>

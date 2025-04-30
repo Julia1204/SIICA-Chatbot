@@ -44,7 +44,7 @@ const Survey = () => {
     e.preventDefault();
     const required = ["age", "gender", "device", "takenBefore", "frequency"];
     if (required.some((f) => !form[f])) {
-      setError(selectedLanguage.errorRequired ?? "Uzupełnij wymagane pola");
+      setError(selectedLanguage.errorRequired);
       return;
     }
     try {
@@ -58,7 +58,7 @@ const Survey = () => {
       navigate("/?step=4");
     } catch (err) {
       console.error(err);
-      setError(selectedLanguage.errorSave ?? "Błąd zapisu, spróbuj ponownie");
+      setError(selectedLanguage.errorSave);
     }
   };
 
@@ -83,13 +83,13 @@ const Survey = () => {
           exit={{ opacity: 0, scale: 0.5 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="survey-title">
-            {selectedLanguage.surveyTitle ?? "Ankieta"}
-          </h2>
+          <h2 className="survey-title">{selectedLanguage.surveyTitle}</h2>
 
           <form className="survey-form" onSubmit={handleSubmit}>
             <div className="survey-group">
-              <label htmlFor="age">{selectedLanguage.ageLabel ?? "Wiek"}</label>
+              <label htmlFor="age">
+                {selectedLanguage.ageLabel} <span className="required">*</span>
+              </label>
               <input
                 className="input"
                 type="number"
@@ -97,7 +97,7 @@ const Survey = () => {
                 name="age"
                 value={form.age}
                 onChange={handleChange}
-                placeholder={selectedLanguage.ageLabel ?? "Wiek"}
+                placeholder={selectedLanguage.ageLabel}
                 min="6"
                 max="120"
               />
@@ -105,7 +105,8 @@ const Survey = () => {
 
             <div className="survey-group">
               <label htmlFor="gender">
-                {selectedLanguage.genderLabel ?? "Płeć"}
+                {selectedLanguage.genderLabel}{" "}
+                <span className="required">*</span>
               </label>
               <select
                 className="input"
@@ -114,20 +115,17 @@ const Survey = () => {
                 value={form.gender}
                 onChange={handleChange}
               >
-                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
-                <option value="female">
-                  {selectedLanguage.female ?? "Kobieta"}
-                </option>
-                <option value="male">
-                  {selectedLanguage.male ?? "Mężczyzna"}
-                </option>
-                <option value="na">{selectedLanguage.na ?? "inne"}</option>
+                <option value="">{selectedLanguage.select}</option>
+                <option value="female">{selectedLanguage.female}</option>
+                <option value="male">{selectedLanguage.male}</option>
+                <option value="na">{selectedLanguage.na}</option>
               </select>
             </div>
 
             <div className="survey-group">
               <label htmlFor="device">
-                {selectedLanguage.deviceLabel ?? "Urządzenie"}
+                {selectedLanguage.deviceLabel}{" "}
+                <span className="required">*</span>
               </label>
               <select
                 className="input"
@@ -136,22 +134,16 @@ const Survey = () => {
                 value={form.device}
                 onChange={handleChange}
               >
-                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
-                <option value="mouse">
-                  {selectedLanguage.mouse ?? "Mysz"}
-                </option>
-                <option value="touchpad">
-                  {selectedLanguage.touchpad ?? "Touchpad"}
-                </option>
-                <option value="other">
-                  {selectedLanguage.other ?? "Inne"}
-                </option>
+                <option value="">{selectedLanguage.select}</option>
+                <option value="mouse">{selectedLanguage.mouse}</option>
+                <option value="touchpad">{selectedLanguage.touchpad}</option>
+                <option value="other">{selectedLanguage.other}</option>
               </select>
             </div>
 
             <div className="survey-group">
               <label htmlFor="additionalInfo">
-                {selectedLanguage.additionalInfoLabel ?? "Dodatkowe informacje"}
+                {selectedLanguage.additionalInfoLabel}
               </label>
               <textarea
                 className="input"
@@ -160,17 +152,14 @@ const Survey = () => {
                 value={form.additionalInfo}
                 rows={3}
                 onChange={handleChange}
-                placeholder={
-                  selectedLanguage.additionalInfoPlaceholder ??
-                  "Choroby, dysfunkcje, uwagi..."
-                }
+                placeholder={selectedLanguage.additionalInfoPlaceholder}
               />
             </div>
 
             <div className="survey-group">
               <label htmlFor="takenBefore">
-                {selectedLanguage.takenBeforeLabel ??
-                  "Brałeś(aś) udział wcześniej?"}
+                {selectedLanguage.takenBeforeLabel}{" "}
+                <span className="required">*</span>
               </label>
               <select
                 className="input"
@@ -179,15 +168,16 @@ const Survey = () => {
                 value={form.takenBefore}
                 onChange={handleChange}
               >
-                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
-                <option value="yes">{selectedLanguage.yes ?? "Tak"}</option>
-                <option value="no">{selectedLanguage.no ?? "Nie"}</option>
+                <option value="">{selectedLanguage.select}</option>
+                <option value="yes">{selectedLanguage.yes}</option>
+                <option value="no">{selectedLanguage.no}</option>
               </select>
             </div>
 
             <div className="survey-group">
               <label htmlFor="frequency">
-                {selectedLanguage.frequencyLabel ?? "Jak często grasz?"}
+                {selectedLanguage.frequencyLabel}{" "}
+                <span className="required">*</span>
               </label>
               <select
                 className="input"
@@ -196,26 +186,20 @@ const Survey = () => {
                 value={form.frequency}
                 onChange={handleChange}
               >
-                <option value="">{selectedLanguage.select ?? "Wybierz"}</option>
-                <option value="daily">
-                  {selectedLanguage.daily ?? "Codziennie"}
-                </option>
+                <option value="">{selectedLanguage.select}</option>
+                <option value="daily">{selectedLanguage.daily}</option>
                 <option value="few_times_week">
-                  {selectedLanguage.fewTimesWeek ?? "Kilka razy w tygodniu"}
+                  {selectedLanguage.fewTimesWeek}
                 </option>
-                <option value="weekly">
-                  {selectedLanguage.weekly ?? "Raz w tygodniu"}
-                </option>
-                <option value="rarely">
-                  {selectedLanguage.rarely ?? "Rzadko"}
-                </option>
+                <option value="weekly">{selectedLanguage.weekly}</option>
+                <option value="rarely">{selectedLanguage.rarely}</option>
               </select>
             </div>
 
             {error && <p className="error">{error}</p>}
 
             <button type="submit" className="next-btn">
-              {selectedLanguage.submit ?? "Wyślij"}
+              {selectedLanguage.submit}
             </button>
           </form>
         </motion.div>
