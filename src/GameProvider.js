@@ -1,9 +1,18 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, {createContext, useReducer, useContext} from "react";
 
 // to analise is it needed?
 const initialState = {
-    player: { name: "Test_User" },
+    player: {name: "Test_User"},
     currentGame: null,
+    survey: {
+        isFilled: false,
+        age: null,
+        gender: null,
+        device: null,
+        additionalInfo: null,
+        takenBefore: null,
+        frequency: null
+    },
     results: {
         multitask: null,
         reaction: null,
@@ -14,7 +23,7 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case "SET_PLAYER":
-            return { ...state, player: action.payload };
+            return {...state, player: action.payload};
         case "SAVE_RESULT":
             return {
                 ...state,
@@ -24,7 +33,14 @@ function reducer(state, action) {
                 },
                 currentGame: null,
             };
-
+        case "SET_SURVEY":
+            return {
+                ...state,
+                survey: {
+                    ...action.payload,
+                    isFilled: true
+                }
+            }
         default:
             return state;
     }
@@ -33,10 +49,10 @@ function reducer(state, action) {
 const GameContext = createContext();
 export const useGame = () => useContext(GameContext);
 
-export const GameProvider = ({ children }) => {
+export const GameProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     return (
-        <GameContext.Provider value={{ state, dispatch }}>
+        <GameContext.Provider value={{state, dispatch}}>
             {children}
         </GameContext.Provider>
     );
