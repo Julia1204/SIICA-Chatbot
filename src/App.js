@@ -6,6 +6,7 @@ import { GameProvider } from "./GameProvider";
 import Assistant from "./assistant/Assistant";
 import SettingsPage from "./settings/SettingsPage";
 import MultitaskingTest from "./games/multitasking/MultitaskingTest";
+import StopSignalTest from "./games/stop/StopSignalTest";
 import Survey from "./survey/Survey";
 import Navbar from "./navbar/Navbar";
 import AboutPage from "./navbar/AboutPage";
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Assistant />} />
             {/* Games */}
             <Route path="/multitasking" element={<MultitaskingTest />} />
+            <Route path="/stop" element={<StopSignalTest />} />
             {/* Settings */}
             <Route path="/settings" element={<SettingsPage />} />
             {/* Survey */}

@@ -2,10 +2,17 @@ import React, { useContext } from "react";
 import { SettingsContext } from "./SettingsContext";
 import languages from "./languages.json";
 import colorSchemes from "./colorSchemes.json";
+import soundOptions from "./soundOptions.json";
 
 const SettingsMenu = () => {
-  const { languageKey, colorSchemeKey, switchLanguage, switchColorScheme } =
-    useContext(SettingsContext);
+  const {
+    languageKey,
+    colorSchemeKey,
+    switchLanguage,
+    switchColorScheme,
+    soundKey,
+    switchSound,
+  } = useContext(SettingsContext);
 
   return (
     <div style={{ margin: "1rem" }}>
@@ -38,6 +45,23 @@ const SettingsMenu = () => {
           {Object.entries(colorSchemes).map(([langCode, langData]) => (
             <option key={langCode} value={langCode}>
               {langData.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div style={{ marginTop: "1rem" }}>
+        <label htmlFor="sound-select" style={{ marginRight: ".5rem" }}>
+          Stop-signal sound:
+        </label>
+        <select
+          id="sound-select"
+          value={soundKey}
+          onChange={(e) => switchSound(e.target.value)}
+        >
+          {Object.entries(soundOptions).map(([key, s]) => (
+            <option key={key} value={key}>
+              {s.name}
             </option>
           ))}
         </select>

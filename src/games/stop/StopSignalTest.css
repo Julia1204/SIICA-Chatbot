@@ -1,0 +1,99 @@
+.stop-test-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.stop-test-centered-text {
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.stop-button {
+  width: 15rem;
+  height: 5rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
+.stop-choice-button {
+  width: 25%;
+  height: 5rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: none;
+  position: absolute;
+  bottom: 2rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.stop-choice-button.enabled {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.summary-card {
+  border-radius: 20px;
+  padding: 2rem 3rem;
+  max-width: 600px;
+  width: 90%;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.summary-table th {
+  text-align: left;
+  padding: 0.3rem 0;
+}
+
+.summary-table td {
+  text-align: right;
+  font-weight: 700;
+}
+
+.summary-details {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 16px;
+  border-radius: 12px;
+}
+
+.summary-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.summary-details-table th,
+.summary-details-table td {
+  padding: 0.4rem;
+  text-align: left;
+}
+
+.stop-choice-button.correct {
+  background-color: var(--highlightColor) !important;
+  color: var(--highlightTextColor) !important;
+}
+
+.stop-choice-button.wrong-left,
+.stop-choice-button.wrong-right {
+  background-color: var(--wrongColor) !important;
+  color: var(--wrongTextColor) !important;
+}

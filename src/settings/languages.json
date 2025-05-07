@@ -78,13 +78,13 @@
     "errorRequired": "Please complete all required fields.",
     "errorSave": "Save error. Please try again.",
 
-    "age":            "Age",
-    "gender":         "Gender",
-    "device":         "Device",
-    "frequency":      "Play frequency",
+    "age": "Age",
+    "gender": "Gender",
+    "device": "Device",
+    "frequency": "Play frequency",
     "additionalInfo": "Additional info",
-    "takenBefore":    "Played before?",
-    "surveyMissing":  "Survey has not been filled in",
+    "takenBefore": "Played before?",
+    "surveyMissing": "Survey has not been filled in",
 
     "welcomeAssistant": "Welcome to our psychological support application.",
     "enterUsername": "Please enter your username:",
@@ -106,7 +106,10 @@
 
     "backToUsername": "Change Username",
     "backToSurvey": "Change The Data In The Survey",
-    "chooseAnotherTest": "Choose Another Test"
+    "chooseAnotherTest": "Choose Another Test",
+
+    "startTest": "Start the Test",
+    "stopInstructions": "Press the button matching the direction of the arrow, unless you hear a beep - in which case withhold your response."
   },
   "pl": {
     "name": "Polski",
@@ -187,13 +190,13 @@
     "errorRequired": "Uzupełnij wszystkie wymagane pola.",
     "errorSave": "Błąd zapisu. Spróbuj ponownie.",
 
-    "age":            "Wiek",
-    "gender":         "Płeć",
-    "device":         "Urządzenie",
-    "frequency":      "Częstotliwość grania",
+    "age": "Wiek",
+    "gender": "Płeć",
+    "device": "Urządzenie",
+    "frequency": "Częstotliwość grania",
     "additionalInfo": "Dodatkowe info",
-    "takenBefore":    "Grał wcześniej?",
-    "surveyMissing":  "Ankieta nie została wypełniona",
+    "takenBefore": "Grał wcześniej?",
+    "surveyMissing": "Ankieta nie została wypełniona",
 
     "welcomeAssistant": "Witamy w aplikacji wspierającej diagnozę psychologiczną.",
     "enterUsername": "Proszę podać swoją nazwę użytkownika:",
@@ -215,6 +218,9 @@
 
     "backToUsername": "Zmień nazwę",
     "backToSurvey": "Zmień dane w ankiecie",
-    "chooseAnotherTest": "Wybierz inny test"
+    "chooseAnotherTest": "Wybierz inny test",
+
+    "startTest": "Zacznij test",
+    "stopInstructions": "Należy nacisnąć przycisk odpowiadający kierunkowi strzałki, chyba że usłyszysz sygnał dźwiękowy - w takim wypadku wstrzymaj reakcję."
   }
 }

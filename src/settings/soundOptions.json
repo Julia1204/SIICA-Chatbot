@@ -1,0 +1,10 @@
+{
+  "default": {
+    "name": "Classic Beep",
+    "url": "/assets/Beep short (sound effect).mp3"
+  },
+  "higher": {
+    "name": "High-pitched Beep",
+    "url": "/assets/Beep - Sound Effect.mp3"
+  }
+}
