@@ -1,12 +1,15 @@
-import React, { useContext, useState, useRef, useCallback } from "react";
+import { useContext, useState, useRef, useCallback, useEffect } from "react";
 import { SettingsContext } from "../../settings/SettingsContext";
 import { useGame } from "../../GameProvider";
 import useMouseGrid from "../commonHooks/useMouseGrid";
 import StartScreen from "./ui/components/StartScreen";
 import ActiveScreen from "./ui/components/ActiveScreen";
 import SummaryScreen from "./ui/components/SummaryScreen";
+import TutorialScreen from "../common/TutorialScreen";
+import PracticeWrapper from "../common/PracticeWrapper";
 
 const MAIN_TRIALS = 15;
+const TEST_TRIALS = 5;
 const SSD_STEP = 50;
 const MIN_SSD = 50;
 const MAX_SSD = 800;
@@ -18,7 +21,7 @@ const StopSignalTest = () => {
   const beepRef = useRef(null);
   const { state } = useGame();
 
-  const [phase, setPhase] = useState("start");
+  const [phase, setPhase] = useState("tutorial");
   const [trial, setTrial] = useState(0);
   const [SSD, setSSD] = useState(250);
   const [results, setResults] = useState([]);
@@ -27,10 +30,13 @@ const StopSignalTest = () => {
   const mouseGrid = useMouseGrid({ rows: 1, cols: 3, areaRef: testAreaRef });
   const [cursorCells, setCursorCells] = useState([]);
 
-  const handleBegin = () => {
-    const audio = new Audio(encodeURI(selectedSound.url));
+  useEffect(() => {
+    const audio = new Audio(selectedSound.url);
     audio.volume = 1;
     beepRef.current = audio;
+  }, [selectedSound.url]);
+
+  const handleBegin = () => {
     setPhase("main");
     setTrial(1);
     setResults([]);
@@ -58,13 +64,52 @@ const StopSignalTest = () => {
       }
 
       setTrial((t) => {
-        const next = t < MAIN_TRIALS ? t + 1 : t;
-        if (next >= MAIN_TRIALS) setPhase("summary");
+        const next = t + 1;
+        if (next > MAIN_TRIALS) {
+          setPhase("summary");
+          return t;
+        }
         return next;
       });
     },
     [mouseGrid]
   );
+
+  if (phase === "tutorial") {
+    return (
+      <TutorialScreen
+        selectedLanguage={selectedLanguage}
+        selectedColorScheme={selectedColorScheme}
+        textKey="tutorialText_stop"
+        onContinue={() => setPhase("practice")}
+        onSkip={() => setPhase("start")}
+      />
+    );
+  }
+
+  if (phase === "practice") {
+    return (
+      <PracticeWrapper
+        practiceCount={TEST_TRIALS}
+        selectedLanguage={selectedLanguage}
+        selectedColorScheme={selectedColorScheme}
+        onComplete={() => setPhase("start")}
+        renderTrial={({ trial: pTrial, onDone }) => (
+          <ActiveScreen
+            selectedLanguage={selectedLanguage}
+            selectedColorScheme={selectedColorScheme}
+            trialNumber={pTrial}
+            totalTrials={TEST_TRIALS}
+            SSD={SSD}
+            onDone={onDone}
+            beep={beepRef.current}
+            stopProbability={STOP_PROBABILITY}
+            testAreaRef={testAreaRef}
+          />
+        )}
+      />
+    );
+  }
 
   if (phase === "start") {
     return (

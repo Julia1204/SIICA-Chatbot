@@ -109,7 +109,15 @@
     "chooseAnotherTest": "Choose Another Test",
 
     "startTest": "Start the Test",
-    "stopInstructions": "Press the button matching the direction of the arrow, unless you hear a beep - in which case withhold your response."
+    "stopInstructions": "Press the button matching the direction of the arrow, unless you hear a beep - in which case withhold your response.",
+
+    "tutorialTitle": "Tutorial",
+    "tutorialContinue": "Continue",
+    "tutorialSkip": "Skip",
+    "tutorialText_stop": "In this tutorial, you'll learn how to do the Stop-Signal Test. Press the button matching the arrow direction unless you hear a beep. Let's try a few examples.",
+    "tutorialText_multi": "In this tutorial, you'll learn the Multitasking Test. You'll see arrows and must respond by rule (side or direction). Let's walk through a few examples.",
+    "practiceTitle": "Practice Round",
+    "practiceText": "Now try a short practice round."
   },
   "pl": {
     "name": "Polski",
@@ -221,6 +229,14 @@
     "chooseAnotherTest": "Wybierz inny test",
 
     "startTest": "Zacznij test",
-    "stopInstructions": "Należy nacisnąć przycisk odpowiadający kierunkowi strzałki, chyba że usłyszysz sygnał dźwiękowy - w takim wypadku wstrzymaj reakcję."
+    "stopInstructions": "Należy nacisnąć przycisk odpowiadający kierunkowi strzałki, chyba że usłyszysz sygnał dźwiękowy - w takim wypadku wstrzymaj reakcję.",
+
+    "tutorialTitle": "Samouczek",
+    "tutorialContinue": "Kontynuuj",
+    "tutorialSkip": "Pomiń",
+    "tutorialText_stop": "W tym samouczku nauczysz się, jak wykonać test Stop-Signal. Naciśnij przycisk zgodny z kierunkiem strzałki, chyba że usłyszysz sygnał dźwiękowy. Spróbujmy kilku przykładów.",
+    "tutorialText_multi": "W tym samouczku poznasz test wielozadaniowości. Zobaczysz strzałki i musisz reagować zgodnie z zasadą (strona lub kierunek). Przejdźmy przez kilka przykładów.",
+    "practiceTitle": "Runda treningowa",
+    "practiceText": "Teraz spróbuj krótkiej rundy treningowej."
   }
 }

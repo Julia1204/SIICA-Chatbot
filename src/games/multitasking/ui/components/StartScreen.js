@@ -3,8 +3,8 @@ import React from "react";
 const StartScreen = ({
   mode,
   setMode,
-  setStartTest,
   setRule,
+  onBegin,
   selectedLanguage,
   selectedColorScheme,
   baseIsWaiting,
@@ -45,6 +45,17 @@ const StartScreen = ({
     border: "none",
   };
 
+  const handleMulti = () => {
+    setMode("multi");
+    onBegin("multi");
+  };
+
+  const handleSinglePick = (chosenRule) => {
+    setMode("single");
+    setRule(chosenRule);
+    onBegin("single");
+  };
+
   return (
     <div style={outer}>
       <div style={container} ref={testAreaRef}>
@@ -76,18 +87,21 @@ const StartScreen = ({
         >
           <button
             style={baseBtn}
-            onClick={() => {
-              setMode("multi");
-              setStartTest(true);
-            }}
+            onClick={handleMulti}
+            disabled={baseIsWaiting}
           >
             {selectedLanguage.multitaskingMode}
           </button>
 
-          <button style={baseBtn} onClick={() => setMode("single")}>
+          <button
+            style={baseBtn}
+            onClick={() => setMode("single")}
+            disabled={baseIsWaiting}
+          >
             {selectedLanguage.singleMode}
           </button>
 
+          {/* show rule choices only after selecting single mode */}
           {mode === "single" && (
             <div
               style={{
@@ -107,20 +121,16 @@ const StartScreen = ({
 
               <button
                 style={baseBtn}
-                onClick={() => {
-                  setRule("side");
-                  setStartTest(true);
-                }}
+                onClick={() => handleSinglePick("side")}
+                disabled={baseIsWaiting}
               >
                 {selectedLanguage.side}
               </button>
 
               <button
                 style={baseBtn}
-                onClick={() => {
-                  setRule("direction");
-                  setStartTest(true);
-                }}
+                onClick={() => handleSinglePick("direction")}
+                disabled={baseIsWaiting}
               >
                 {selectedLanguage.direction}
               </button>

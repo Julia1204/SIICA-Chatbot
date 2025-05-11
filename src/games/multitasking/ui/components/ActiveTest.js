@@ -11,6 +11,7 @@ const ActiveTest = ({
   handleClick,
   isWaiting,
   testAreaRef,
+  maxSteps,
 }) => {
   const outer = {
     width: "100vw",
@@ -83,7 +84,7 @@ const ActiveTest = ({
         </h1>
 
         <h2 style={stepS}>
-          {selectedLanguage.step}: {step} / 15
+          {selectedLanguage.step}: {step} / {maxSteps}
         </h2>
 
         <div

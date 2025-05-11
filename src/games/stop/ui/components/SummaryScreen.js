@@ -1,6 +1,6 @@
 import React from "react";
 import { saveAs } from "file-saver";
-import { makePdfBlob } from "../../../utils/GenerateReport";
+import { makePdfBlob } from "../../../common/GenerateReport";
 import { useNavigate } from "react-router-dom";
 
 const SummaryScreen = ({

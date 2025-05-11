@@ -1,25 +1,34 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useContext,
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from "react";
 import { SettingsContext } from "../../settings/SettingsContext";
 import { useGame } from "../../GameProvider";
 import useMouseGrid from "../commonHooks/useMouseGrid";
-import { COLLECTIONS } from "../../firebase/firebaseCollections";
-import { addData } from "../../firebase/firebaseQueries";
 import StartScreen from "./ui/components/StartScreen";
 import ActiveTest from "./ui/components/ActiveTest";
 import SummaryScreen from "./ui/components/SummaryScreen";
+import TutorialScreen from "../common/TutorialScreen";
+import PracticeWrapper from "../common/PracticeWrapper";
+import { COLLECTIONS } from "../../firebase/firebaseCollections";
+import { addData } from "../../firebase/firebaseQueries";
 import "./MultitaskingTest.css";
 
-const MAX_STEPS = 15;
+const MAIN_TRIALS = 15;
+const PRACTICE_TRIALS = 5;
 
 const MultitaskingTest = () => {
-  /* ==== CONTEXTS ==== */
   const { selectedLanguage, selectedColorScheme } = useContext(SettingsContext);
   const { state } = useGame();
+  const testAreaRef = useRef(null);
+  const mouseGrid = useMouseGrid({ rows: 1, cols: 3, areaRef: testAreaRef });
 
-  /* ==== STATE ==== */
-  const [mode, setMode] = useState("");
+  const [phase, setPhase] = useState("tutorial");
+  const [mode, setMode] = useState("multi");
   const [rule, setRule] = useState("");
-  const [startTest, setStartTest] = useState(false);
   const [step, setStep] = useState(0);
   const [score, setScore] = useState(0);
   const [highlight, setHighlight] = useState("");
@@ -29,43 +38,15 @@ const MultitaskingTest = () => {
   const [reactionTimes, setReactionTimes] = useState([]);
   const [trialStart, setTrialStart] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
-  const [testFinished, setTestFinished] = useState(false);
   const [correctSides, setCorrectSides] = useState([]);
   const [selectedSides, setSelectedSides] = useState([]);
   const finishedDateRef = useRef(null);
   const [finishedDate, setFinishedDate] = useState(null);
 
-  /* ==== REFS & HOOKS ==== */
-  const testAreaRef = useRef(null);
-  const mouseGrid = useMouseGrid({ rows: 1, cols: 3, areaRef: testAreaRef });
-
-  /* =============================================================
-   *                         EFFECTS
-   * ===========================================================*/
-  // prepare first trial when user clicks start
   useEffect(() => {
-    if (!startTest) return;
-    setStep(1);
-    setCursorCells([mouseGrid()]);
-    if (mode === "multi") setRule(Math.random() < 0.5 ? "side" : "direction");
-    setArrowSide(Math.random() < 0.5 ? "left" : "right");
-    setArrowDirection(Math.random() < 0.5 ? "left" : "right");
-    setTrialStart(Date.now());
-  }, [startTest]);
-
-  // add cursor cell for every subsequent trial (for path drawing)
-  useEffect(() => {
-    if (trialStart === null || step <= 1) return;
-    setCursorCells((prev) => [...prev, mouseGrid()]);
-  }, [trialStart]);
-
-  // when test ends – save data to Firestore
-  useEffect(() => {
-    if (!testFinished) return;
-
+    if (phase !== "summary") return;
     const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
     const avgRT = totalTime / reactionTimes.length;
-
     finishedDateRef.current = new Date();
     setFinishedDate(finishedDateRef.current);
     const result = {
@@ -81,119 +62,171 @@ const MultitaskingTest = () => {
       cursorCells,
       createdAt: finishedDateRef,
     };
-
     addData(COLLECTIONS.TEST_RESULTS, result)
-      .then((id) => console.log("Saved result with id:", id))
+      .then((id) => console.log("Saved result id", id))
       .catch(console.error);
-  }, [testFinished]);
+  }, [phase]);
 
-  /* =============================================================
-   *                         HANDLERS
-   * ===========================================================*/
-  const handleClick = (side) => {
-    if (isWaiting) return;
-    setIsWaiting(true);
-
-    const rt = Date.now() - trialStart;
-    setReactionTimes((prev) => [...prev, rt]);
-
-    const correct = rule === "side" ? arrowSide : arrowDirection;
-    setCorrectSides((prev) => [...prev, correct]);
-    setSelectedSides((prev) => [...prev, side]);
-
-    const isCorrect = side === correct;
-    setScore((prev) => prev + (isCorrect ? 1 : 0));
-    setHighlight(isCorrect ? side : `wrong-${side}`);
-
-    const next = step + 1;
-
-    setTimeout(() => {
+  const initializeTrial = useCallback(
+    (startPhase) => {
+      setPhase(startPhase);
+      setScore(0);
+      setReactionTimes([]);
+      setCursorCells([]);
+      setCorrectSides([]);
+      setSelectedSides([]);
+      setIsWaiting(false);
       setHighlight("");
+      setStep(1);
+      if (startPhase !== "start" && mode === "multi") {
+        setRule(Math.random() < 0.5 ? "side" : "direction");
+      }
+      const nextArrowSide = Math.random() < 0.5 ? "left" : "right";
+      const nextArrowDirection = Math.random() < 0.5 ? "left" : "right";
+      setArrowSide(nextArrowSide);
+      setArrowDirection(nextArrowDirection);
+      setTrialStart(Date.now());
+      setCursorCells([mouseGrid()]);
+    },
+    [mode, mouseGrid]
+  );
 
-      if (next > MAX_STEPS) {
-        setTestFinished(true);
-      } else {
+  const handleClick = useCallback(
+    (side) => {
+      if (isWaiting || (phase !== "main" && phase !== "practice")) return;
+      setIsWaiting(true);
+      const rt = Date.now() - trialStart;
+      setReactionTimes((prev) => [...prev, rt]);
+      const correct = rule === "side" ? arrowSide : arrowDirection;
+      setCorrectSides((prev) => [...prev, correct]);
+      setSelectedSides((prev) => [...prev, side]);
+      const isCorrect = side === correct;
+      setScore((prev) => prev + (isCorrect ? 1 : 0));
+      setHighlight(isCorrect ? side : `wrong-${side}`);
+
+      setTimeout(() => {
+        setHighlight("");
+        setIsWaiting(false);
         if (mode === "multi")
           setRule(Math.random() < 0.5 ? "side" : "direction");
-        setArrowSide(Math.random() < 0.5 ? "left" : "right");
-        setArrowDirection(Math.random() < 0.5 ? "left" : "right");
-        setTrialStart(Date.now());
-        setStep(next);
-      }
+        const nextAS = Math.random() < 0.5 ? "left" : "right";
+        const nextAD = Math.random() < 0.5 ? "left" : "right";
+        setArrowSide(nextAS);
+        setArrowDirection(nextAD);
+        setCursorCells((prev) => [...prev, mouseGrid()]);
+        if (phase === "main") {
+          if (step >= MAIN_TRIALS) {
+            setPhase("summary");
+            return;
+          }
+          setStep((prev) => prev + 1);
+          setTrialStart(Date.now());
+        }
+      }, 1000);
+    },
+    [
+      isWaiting,
+      phase,
+      step,
+      rule,
+      arrowSide,
+      arrowDirection,
+      trialStart,
+      mode,
+      mouseGrid,
+    ]
+  );
 
-      setIsWaiting(false);
-    }, 1000);
-  };
+  const resetTest = () => initializeTrial("tutorial");
 
-  const resetTest = () => {
-    setMode("");
-    setRule("");
-    setStartTest(false);
-    setStep(0);
-    setScore(0);
-    setHighlight("");
-    setArrowSide("left");
-    setArrowDirection("left");
-    setCursorCells([]);
-    setReactionTimes([]);
-    setTrialStart(null);
-    setIsWaiting(false);
-    setTestFinished(false);
-    setCorrectSides([]);
-    setSelectedSides([]);
-    setFinishedDate(null);
-    finishedDateRef.current = null;
-  };
+  if (phase === "tutorial") {
+    return (
+      <TutorialScreen
+        selectedLanguage={selectedLanguage}
+        selectedColorScheme={selectedColorScheme}
+        textKey="tutorialText_multi"
+        onContinue={() => initializeTrial("practice")}
+        onSkip={() => initializeTrial("start")}
+      />
+    );
+  }
 
-  /* =============================================================
-   *                         RENDER
-   * ===========================================================*/
-  if (!startTest) {
+  if (phase === "practice") {
+    return (
+      <PracticeWrapper
+        practiceCount={PRACTICE_TRIALS}
+        selectedLanguage={selectedLanguage}
+        selectedColorScheme={selectedColorScheme}
+        onComplete={() => initializeTrial("start")}
+        renderTrial={({ trial: pStep, onDone }) => (
+          <ActiveTest
+            rule={rule}
+            maxSteps={PRACTICE_TRIALS}
+            selectedLanguage={selectedLanguage}
+            step={pStep}
+            arrowSide={arrowSide}
+            arrowDirection={arrowDirection}
+            selectedColorScheme={selectedColorScheme}
+            highlight={highlight}
+            handleClick={(side) => {
+              handleClick(side);
+              onDone();
+            }}
+            isWaiting={isWaiting}
+            testAreaRef={testAreaRef}
+          />
+        )}
+      />
+    );
+  }
+
+  if (phase === "start") {
     return (
       <StartScreen
         mode={mode}
         setMode={setMode}
-        setStartTest={setStartTest}
+        setPhase={setPhase}
         setRule={setRule}
+        baseIsWaiting={isWaiting}
         selectedLanguage={selectedLanguage}
         selectedColorScheme={selectedColorScheme}
-        baseIsWaiting={isWaiting}
+        onBegin={() => initializeTrial("main")}
         testAreaRef={testAreaRef}
       />
     );
   }
 
-  if (testFinished) {
+  if (phase === "main") {
     return (
-      <SummaryScreen
+      <ActiveTest
+        rule={rule}
+        maxSteps={MAIN_TRIALS}
         selectedLanguage={selectedLanguage}
-        selectedColorScheme={selectedColorScheme}
-        score={score}
         step={step}
-        reactionTimes={reactionTimes}
-        cursorCells={cursorCells}
-        correctSides={correctSides}
-        selectedSides={selectedSides}
-        finishedDate={finishedDate}
-        state={state}
-        resetTest={resetTest}
+        arrowSide={arrowSide}
+        arrowDirection={arrowDirection}
+        selectedColorScheme={selectedColorScheme}
+        highlight={highlight}
+        handleClick={handleClick}
+        isWaiting={isWaiting}
+        testAreaRef={testAreaRef}
       />
     );
   }
 
-  // Active test running
   return (
-    <ActiveTest
-      rule={rule}
+    <SummaryScreen
       selectedLanguage={selectedLanguage}
-      step={step}
-      arrowSide={arrowSide}
-      arrowDirection={arrowDirection}
       selectedColorScheme={selectedColorScheme}
-      highlight={highlight}
-      handleClick={handleClick}
-      isWaiting={isWaiting}
-      testAreaRef={testAreaRef}
+      score={score}
+      step={MAIN_TRIALS}
+      reactionTimes={reactionTimes}
+      cursorCells={cursorCells}
+      correctSides={correctSides}
+      selectedSides={selectedSides}
+      finishedDate={finishedDate}
+      state={state}
+      resetTest={resetTest}
     />
   );
 };
