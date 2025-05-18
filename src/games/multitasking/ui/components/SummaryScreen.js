@@ -54,8 +54,8 @@ const SummaryScreen = ({
   };
 
   const outer = {
-    width: "98vw",
-    minHeight: "96.5vh",
+    width: "98.3vw",
+    minHeight: "96.7vh",
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",

@@ -1,4 +1,3 @@
-import React from "react";
 import "../../StopSignalTest.css";
 
 const StartScreen = ({ selectedLanguage, selectedColorScheme, onBegin }) => (

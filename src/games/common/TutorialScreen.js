@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function TutorialScreen({
   selectedLanguage,
   selectedColorScheme,
@@ -12,7 +10,7 @@ export default function TutorialScreen({
       style={{
         backgroundColor: selectedColorScheme.backgroundColor,
         color: selectedColorScheme.textColor,
-        height: "93vh",
+        height: "93.4vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

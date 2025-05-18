@@ -94,7 +94,7 @@ const ActiveScreen = ({
     <div style={outer} ref={testAreaRef}>
       <div
         className="stop-test-container"
-        style={{ minHeight: isTestTrial ? "72vh" : "93vh" }}
+        style={{ minHeight: isTestTrial ? "72.3vh" : "93.4vh" }}
       >
         <div
           style={{

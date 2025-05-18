@@ -22,7 +22,7 @@ export default function PracticeWrapper({
       style={{
         backgroundColor: selectedColorScheme.backgroundColor,
         color: selectedColorScheme.textColor,
-        height: "21vh",
+        height: "25vh",
         position: "relative",
       }}
     >
