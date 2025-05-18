@@ -15,6 +15,7 @@ const ActiveScreen = ({
   beep,
   stopProbability,
   testAreaRef,
+  isTestTrial,
 }) => {
   const [arrowDir, setArrowDir] = useState("left");
   const [isStop, setIsStop] = useState(false);
@@ -80,7 +81,7 @@ const ActiveScreen = ({
 
   const outer = {
     width: "100vw",
-    minHeight: "100vh",
+    minHeight: isTestTrial ? "10vh" : "79vh",
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",
@@ -91,8 +92,17 @@ const ActiveScreen = ({
 
   return (
     <div style={outer} ref={testAreaRef}>
-      <div className="stop-test-container">
-        <div style={{ textAlign: "center", width: "100%", padding: "2rem" }}>
+      <div
+        className="stop-test-container"
+        style={{ minHeight: isTestTrial ? "72vh" : "93vh" }}
+      >
+        <div
+          style={{
+            textAlign: "center",
+            width: "100%",
+            padding: "2rem",
+          }}
+        >
           <h2
             style={{ color: selectedColorScheme.titleColor, margin: "1.5rem" }}
           >

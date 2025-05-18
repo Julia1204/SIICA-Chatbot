@@ -29,16 +29,15 @@ const AboutPage = () => {
         Katarzyna Hajduk (259189)
       </p>
 
-      <p className="about-section-title">
+      <p className="about-supervisor">
         {selectedLanguage.supervisor}: Dr inż. Jan Nikodem
       </p>
 
       <p className="about-details">
         {selectedLanguage.courseName}
         <br />
-        {selectedLanguage.university}
+        {selectedLanguage.university}, 2025
         <br />
-        {selectedLanguage.schedule}
       </p>
 
       <p className="about-contact">

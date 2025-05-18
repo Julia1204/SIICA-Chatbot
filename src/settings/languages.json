@@ -78,6 +78,12 @@
     "errorRequired": "Please complete all required fields.",
     "errorSave": "Save error. Please try again.",
 
+    "required": "Required",
+    "wait": "Wait",
+    "soundTestTitle": "Sound Test",
+    "soundTestInstructions": "Tap the speaker to make sure you can hear the beep used in the test.",
+    "continue": "Yes, I can hear it",
+
     "age": "Age",
     "gender": "Gender",
     "device": "Device",
@@ -116,8 +122,27 @@
     "tutorialSkip": "Skip",
     "tutorialText_stop": "In this tutorial, you'll learn how to do the Stop-Signal Test. Press the button matching the arrow direction unless you hear a beep. Let's try a few examples.",
     "tutorialText_multi": "In this tutorial, you'll learn the Multitasking Test. You'll see arrows and must respond by rule (side or direction). Let's walk through a few examples.",
+    "tutorialText_litw": "This test measures your ability to multitask by requiring you to identify shapes while remembering a sequence of letters and numbers. First, you'll be shown a sequence to remember. Then, you'll need to identify shapes as they appear. After completing all trials, you'll be asked to recall the original sequence. Let's walk through a few examples.",
     "practiceTitle": "Practice Round",
-    "practiceText": "Now try a short practice round."
+    "practiceText": "Now try a short practice round.",
+
+    "shortcuts": "Shortcuts",
+    "completed": "completed",
+    "pressNext": "Press NEXT to show next symbol",
+    "memorySequence": "Memorize this sequence",
+    "memoryCountdown": "You have",
+    "seconds": "seconds",
+    "toMemorize": "to memorize this sequence:",
+    "memorizeInstruction1": "After the timer ends, you'll begin the shape identification task.",
+    "memorizeInstruction2": "Try to recall this sequence at the end of the test.",
+    "skipTimer": "Skip Timer",
+    "enterSequence": "Please enter the sequence you memorized:",
+    "enterSequenceInstructions1": "Please enter the",
+    "enterSequenceInstructions2": "-character sequence you memorized at the beginning.",
+    "shapeMemoryTest": "Shape Memory Test",
+    "memoryRecall": "Memory recall:",
+    "originalSequence": "Original sequence:",
+    "yourRecall": "Your recall:"
   },
   "pl": {
     "name": "Polski",
@@ -166,7 +191,7 @@
     "detailedResults": "Szczegółowe wyniki",
     "numberQuestion": "Numer pytania",
     "cell": "Miejsce kursora przy rozpoczęciu pytania",
-    "reactionTime": "czas reakcji",
+    "reactionTime": "Czas reakcji",
     "middle": "Środek",
     "correctAnswer": "Poprawna odpowiedź",
     "downloadPdf": "Pobierz PDF",
@@ -197,6 +222,12 @@
     "submit": "Wyślij",
     "errorRequired": "Uzupełnij wszystkie wymagane pola.",
     "errorSave": "Błąd zapisu. Spróbuj ponownie.",
+
+    "required": "Wymagane",
+    "wait": "Czekać",
+    "soundTestTitle": "Test dźwięku",
+    "soundTestInstructions": "Kliknij głośnik, aby sprawdzić, czy słyszysz sygnał używany w teście.",
+    "continue": "Tak, słyszę dźwięk",
 
     "age": "Wiek",
     "gender": "Płeć",
@@ -236,7 +267,26 @@
     "tutorialSkip": "Pomiń",
     "tutorialText_stop": "W tym samouczku nauczysz się, jak wykonać test Stop-Signal. Naciśnij przycisk zgodny z kierunkiem strzałki, chyba że usłyszysz sygnał dźwiękowy. Spróbujmy kilku przykładów.",
     "tutorialText_multi": "W tym samouczku poznasz test wielozadaniowości. Zobaczysz strzałki i musisz reagować zgodnie z zasadą (strona lub kierunek). Przejdźmy przez kilka przykładów.",
+    "tutorialText_litw": "Ten test mierzy zdolność do wielozadaniowości, wymagając identyfikacji kształtów podczas zapamiętywania sekwencji liter i cyfr. Najpierw zostanie wyświetlona sekwencja do zapamiętania. Następnie będziesz musiał zidentyfikować pojawiające się kształty. Po wykonaniu wszystkich prób zostaniesz poproszony o przypomnienie sobie oryginalnej sekwencji. Przyjrzyjmy się kilku przykładom.",
     "practiceTitle": "Runda treningowa",
-    "practiceText": "Teraz spróbuj krótkiej rundy treningowej."
+    "practiceText": "Teraz spróbuj krótkiej rundy treningowej.",
+
+    "shortcuts": "Skróty",
+    "completed": "ukończone",
+    "pressNext": "Naciśnij przycisk 'Dalej', aby wyświetlić następny symbol",
+    "memorySequence": "Sekwencja pamięci",
+    "memoryCountdown": "Masz",
+    "seconds": "sekund",
+    "toMemorize": "aby zapamiętać te sekwencję:",
+    "memorizeInstruction1": "Po zakończeniu odliczania czasu rozpocznie się zadanie identyfikacji kształtu.",
+    "memorizeInstruction2": "Spróbuj przypomnieć sobie tę sekwencję pod koniec testu.",
+    "skipTimer": "Pomiń czekanie",
+    "enterSequence": "Wpisz sekwencję, którą pamiętasz:",
+    "enterSequenceInstructions1": "Wprowadź",
+    "enterSequenceInstructions2": "-znakową sekwencję zapamiętaną na początku.",
+    "shapeMemoryTest": "Badanie Pamięci Kształtu",
+    "memoryRecall": "Poprawność sekwencji:",
+    "originalSequence": "Oryginalna sekwencja:",
+    "yourRecall": "Wpisana sekwencja:"
   }
 }

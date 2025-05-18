@@ -162,6 +162,7 @@ const MultitaskingTest = () => {
           <ActiveTest
             rule={rule}
             maxSteps={PRACTICE_TRIALS}
+            isTestTrial={true}
             selectedLanguage={selectedLanguage}
             step={pStep}
             arrowSide={arrowSide}

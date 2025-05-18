@@ -1,7 +1,8 @@
-import React from "react";
+import { useContext } from "react";
 import { saveAs } from "file-saver";
 import { makePdfBlob } from "../../../common/GenerateReport";
 import { useNavigate } from "react-router-dom";
+import { SettingsContext } from "../../../../settings/SettingsContext";
 
 const SummaryScreen = ({
   selectedLanguage,
@@ -16,6 +17,8 @@ const SummaryScreen = ({
   state,
   resetTest,
 }) => {
+  const { showDetailedSummary } = useContext(SettingsContext);
+
   const navigate = useNavigate();
   const totalTime = reactionTimes.reduce((sum, t) => sum + t, 0);
   const avgRT = totalTime / reactionTimes.length;
@@ -51,8 +54,8 @@ const SummaryScreen = ({
   };
 
   const outer = {
-    width: "100vw",
-    minHeight: "100vh",
+    width: "98vw",
+    minHeight: "96.5vh",
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",
@@ -60,13 +63,13 @@ const SummaryScreen = ({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    padding: "2rem",
+    padding: "1rem",
   };
 
   const card = {
     backgroundColor: selectedColorScheme.summaryBackgroundColor,
     borderRadius: 20,
-    padding: "2rem 3rem",
+    padding: "1rem 3rem",
     maxWidth: 600,
     width: "90%",
     boxShadow: "0 4px 8px rgba(0,0,0,.15)",
@@ -105,7 +108,6 @@ const SummaryScreen = ({
       <h1 style={{ color: selectedColorScheme.titleColor }}>
         {selectedLanguage.summary}
       </h1>
-
       <div style={card}>
         <table style={statTable}>
           <tbody>
@@ -127,45 +129,58 @@ const SummaryScreen = ({
         </table>
       </div>
 
-      <h2 style={{ marginTop: "2rem", color: selectedColorScheme.titleColor }}>
-        {selectedLanguage.detailedResults}
-      </h2>
-
-      <div style={detailWrap}>
-        <table style={detailTable}>
-          <thead>
-            <tr>
-              <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
-                {selectedLanguage.numberQuestion}
-              </th>
-              <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
-                {selectedLanguage.cell}
-              </th>
-              <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
-                {selectedLanguage.selectedAnswer}
-              </th>
-              <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
-                {selectedLanguage.correctAnswer}
-              </th>
-              <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
-                {selectedLanguage.reactionTime} (ms)
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {cursorCells.map((cell, i) => (
-              <tr key={i} style={zebra(i)}>
-                <td>{i + 1}</td>
-                <td>{cellLabel(cell)}</td>
-                <td>{sideLabel(selectedSides[i])}</td>
-                <td>{sideLabel(correctSides[i])}</td>
-                <td>{reactionTimes[i]}</td>
+      {showDetailedSummary && (
+        <h2
+          style={{ marginTop: "2rem", color: selectedColorScheme.titleColor }}
+        >
+          {selectedLanguage.detailedResults}
+        </h2>
+      )}
+      {showDetailedSummary && (
+        <div style={detailWrap}>
+          <table style={detailTable}>
+            <thead>
+              <tr>
+                <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
+                  {selectedLanguage.numberQuestion}
+                </th>
+                <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
+                  {selectedLanguage.cell}
+                </th>
+                <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
+                  {selectedLanguage.selectedAnswer}
+                </th>
+                <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
+                  {selectedLanguage.correctAnswer}
+                </th>
+                <th style={{ padding: "0.4rem 0.6rem", textAlign: "left" }}>
+                  {selectedLanguage.reactionTime} (ms)
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+            </thead>
+            <tbody>
+              {cursorCells.map((cell, i) => (
+                <tr
+                  key={i}
+                  style={{
+                    ...zebra(i),
+                    backgroundColor:
+                      selectedSides[i] === correctSides[i]
+                        ? "rgba(0, 128, 0, 0.25)"
+                        : "rgba(255, 0, 0, 0.25)",
+                  }}
+                >
+                  <td>{i + 1}</td>
+                  <td>{cellLabel(cell)}</td>
+                  <td>{sideLabel(selectedSides[i])}</td>
+                  <td>{sideLabel(correctSides[i])}</td>
+                  <td>{reactionTimes[i]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       <button
         style={{
           backgroundColor: selectedColorScheme.buttonBackground,
@@ -209,7 +224,6 @@ const SummaryScreen = ({
       >
         ⬇️ {selectedLanguage.downloadPdf}
       </button>
-
       <div
         style={{
           marginTop: "2rem",

@@ -7,6 +7,7 @@ import ActiveScreen from "./ui/components/ActiveScreen";
 import SummaryScreen from "./ui/components/SummaryScreen";
 import TutorialScreen from "../common/TutorialScreen";
 import PracticeWrapper from "../common/PracticeWrapper";
+import SoundTestScreen from "./ui/components/SoundTestScreen";
 
 const MAIN_TRIALS = 15;
 const TEST_TRIALS = 5;
@@ -21,7 +22,7 @@ const StopSignalTest = () => {
   const beepRef = useRef(null);
   const { state } = useGame();
 
-  const [phase, setPhase] = useState("tutorial");
+  const [phase, setPhase] = useState("soundTest");
   const [trial, setTrial] = useState(0);
   const [SSD, setSSD] = useState(250);
   const [results, setResults] = useState([]);
@@ -75,6 +76,17 @@ const StopSignalTest = () => {
     [mouseGrid]
   );
 
+  if (phase === "soundTest") {
+    return (
+      <SoundTestScreen
+        selectedLanguage={selectedLanguage}
+        selectedColorScheme={selectedColorScheme}
+        selectedSound={selectedSound}
+        onContinue={() => setPhase("tutorial")}
+      />
+    );
+  }
+
   if (phase === "tutorial") {
     return (
       <TutorialScreen
@@ -100,6 +112,7 @@ const StopSignalTest = () => {
             selectedColorScheme={selectedColorScheme}
             trialNumber={pTrial}
             totalTrials={TEST_TRIALS}
+            isTestTrial={true}
             SSD={SSD}
             onDone={onDone}
             beep={beepRef.current}
@@ -147,12 +160,17 @@ const StopSignalTest = () => {
     const rows = results.map((r, i) => {
       const raw = cursorCells[i];
       const cellNum = [1, 2, 3].includes(raw) ? raw : 2;
+      const isStopTrial = r.wasStop;
       return {
         nr: i + 1,
         cell: cellLabel(cellNum),
-        select: r.clicked ? sideLabel(r.clicked) : "",
-        correct: r.wasStop ? "" : sideLabel(r.correctSide),
-        rt: !r.rt || r.wasStop ? "" : `${r.rt}`,
+        select: r.clicked
+          ? sideLabel(r.clicked)
+          : isStopTrial
+          ? selectedLanguage.wait
+          : "",
+        correct: isStopTrial ? selectedLanguage.wait : sideLabel(r.correctSide),
+        rt: isStopTrial ? "—" : r.rt ? `${r.rt}` : "—",
       };
     });
 

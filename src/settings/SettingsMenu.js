@@ -10,8 +10,10 @@ const SettingsMenu = () => {
     colorSchemeKey,
     switchLanguage,
     switchColorScheme,
+    showDetailedSummary,
     soundKey,
     switchSound,
+    switchSummary,
   } = useContext(SettingsContext);
 
   return (
@@ -65,6 +67,18 @@ const SettingsMenu = () => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div style={{ marginTop: "1rem" }}>
+        <label htmlFor="details-toggle" style={{ marginRight: ".5rem" }}>
+          Show detailed summary:
+        </label>
+        <input
+          id="details-toggle"
+          type="checkbox"
+          checked={showDetailedSummary}
+          onChange={(e) => switchSummary(e.target.checked)}
+        />
       </div>
     </div>
   );

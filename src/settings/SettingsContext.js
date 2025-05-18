@@ -9,6 +9,7 @@ export const SettingsProvider = ({ children }) => {
   const [languageKey, setLanguageKey] = useState("pl");
   const [colorSchemeKey, setColorSchemeKey] = useState("dark");
   const [soundKey, setSoundKey] = useState("default");
+  const [showDetailedSummary, setShowDetailedSummary] = useState(true);
 
   const selectedLanguage = languages[languageKey];
   const selectedColorScheme = colorSchemes[colorSchemeKey];
@@ -23,9 +24,11 @@ export const SettingsProvider = ({ children }) => {
         selectedLanguage,
         selectedColorScheme,
         selectedSound,
+        showDetailedSummary,
         switchLanguage: setLanguageKey,
         switchColorScheme: setColorSchemeKey,
         switchSound: setSoundKey,
+        switchSummary: setShowDetailedSummary,
       }}
     >
       {children}

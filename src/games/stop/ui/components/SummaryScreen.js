@@ -1,7 +1,8 @@
-import React from "react";
+import { useContext } from "react";
 import { saveAs } from "file-saver";
 import { makePdfBlob } from "../../../common/GenerateReport";
 import { useNavigate } from "react-router-dom";
+import { SettingsContext } from "../../../../settings/SettingsContext";
 
 const SummaryScreen = ({
   selectedLanguage,
@@ -13,6 +14,7 @@ const SummaryScreen = ({
   rows,
   state,
 }) => {
+  const { showDetailedSummary } = useContext(SettingsContext);
   const navigate = useNavigate();
 
   return (
@@ -27,7 +29,6 @@ const SummaryScreen = ({
       <h1 style={{ color: selectedColorScheme.titleColor }}>
         {selectedLanguage.summary}
       </h1>
-
       <div
         className="summary-card"
         style={{ backgroundColor: selectedColorScheme.summaryBackgroundColor }}
@@ -51,45 +52,55 @@ const SummaryScreen = ({
           </tbody>
         </table>
       </div>
-
-      <h2
-        style={{
-          marginTop: "2rem",
-          color: selectedColorScheme.titleColor,
-        }}
-      >
-        {selectedLanguage.detailedResults}
-      </h2>
-      <div
-        className="summary-details"
-        style={{
-          border: `1px solid ${selectedColorScheme.textColor}33`,
-        }}
-      >
-        <table className="summary-details-table">
-          <thead>
-            <tr>
-              <th>{selectedLanguage.numberQuestion}</th>
-              <th>{selectedLanguage.cell}</th>
-              <th>{selectedLanguage.selectedAnswer}</th>
-              <th>{selectedLanguage.correctAnswer}</th>
-              <th>{selectedLanguage.reactionTime} (ms)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i}>
-                <td>{r.nr}</td>
-                <td>{r.cell}</td>
-                <td>{r.select}</td>
-                <td>{r.correct}</td>
-                <td>{r.rt ? `${r.rt} ms` : ""}</td>
+      {showDetailedSummary && (
+        <h2
+          style={{
+            marginTop: "2rem",
+            color: selectedColorScheme.titleColor,
+          }}
+        >
+          {selectedLanguage.detailedResults}
+        </h2>
+      )}
+      {showDetailedSummary && (
+        <div
+          className="summary-details"
+          style={{
+            border: `1px solid ${selectedColorScheme.textColor}33`,
+          }}
+        >
+          <table className="summary-details-table">
+            <thead>
+              <tr>
+                <th>{selectedLanguage.numberQuestion}</th>
+                <th>{selectedLanguage.cell}</th>
+                <th>{selectedLanguage.selectedAnswer}</th>
+                <th>{selectedLanguage.correctAnswer}</th>
+                <th>{selectedLanguage.reactionTime} (ms)</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
+            </thead>
+            <tbody>
+              {rows.map((r, i) => {
+                const isCorrect = r.select === r.correct;
+                const rowStyle = {
+                  backgroundColor: isCorrect
+                    ? "rgba(0, 128, 0, 0.25)"
+                    : "rgba(255, 0, 0, 0.25)",
+                };
+                return (
+                  <tr key={i} style={rowStyle}>
+                    <td>{r.nr}</td>
+                    <td>{r.cell}</td>
+                    <td>{r.select}</td>
+                    <td>{r.correct}</td>
+                    <td>{r.rt ? `${r.rt} ms` : ""}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
       <button
         className="stop-button"
         style={{
@@ -132,7 +143,6 @@ const SummaryScreen = ({
       >
         ⬇️ {selectedLanguage.downloadPdf}
       </button>
-
       <div
         style={{
           marginTop: "1.5rem",

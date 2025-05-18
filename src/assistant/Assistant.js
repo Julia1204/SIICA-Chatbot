@@ -108,7 +108,9 @@ const Assistant = () => {
           <>
             <p>
               {selectedLanguage.enterUsername}{" "}
-              <span className="required">*</span>
+              <span className="required" title={selectedLanguage.required}>
+                *
+              </span>
             </p>
             <input
               className="input"

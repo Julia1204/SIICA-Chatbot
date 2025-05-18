@@ -12,10 +12,11 @@ const ActiveTest = ({
   isWaiting,
   testAreaRef,
   maxSteps,
+  isTestTrial,
 }) => {
   const outer = {
     width: "100vw",
-    minHeight: "100vh",
+    minHeight: isTestTrial ? "50vh" : "100vh",
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",
@@ -26,7 +27,7 @@ const ActiveTest = ({
 
   const container = {
     width: "100vw",
-    minHeight: "100vh",
+    minHeight: isTestTrial ? "79vh" : "75vh",
     position: "relative",
     textAlign: "center",
     padding: "2rem 1rem",
