@@ -2,9 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SettingsContext } from "../settings/SettingsContext";
 import { useGame } from "../GameProvider";
-import { fetchAll } from "../firebase/firebaseQueries";
+import {addData, fetchAll} from "../firebase/firebaseQueries";
 import { AnimatePresence, motion } from "framer-motion";
+import { serverTimestamp } from "firebase/firestore";
 import "./Assistant.css";
+import {COLLECTIONS} from "../firebase/firebaseCollections";
+
 
 const Assistant = () => {
   const { selectedColorScheme, selectedLanguage } = useContext(SettingsContext);
@@ -33,22 +36,34 @@ const Assistant = () => {
     fetchUsers();
   }, []);
 
-  const handleUsernameSubmit = () => {
+  const handleUsernameSubmit = async () => {
     if (username.trim() === "") {
       setError(selectedLanguage.errorEnterUsername);
       return;
     }
+    const trimmedName = username.trim();
     const foundUser = users.find(
-      (u) => u.name.trim().toUpperCase() === username.trim().toUpperCase()
+        (u) => u.name.trim().toUpperCase() === trimmedName.toUpperCase()
     );
     if (foundUser) {
       setExistingUser(foundUser);
-      dispatch({ type: "SET_PLAYER", payload: { name: foundUser.name } });
+      dispatch({type: "SET_PLAYER", payload: {name: foundUser.name}});
       navigate("/?step=2");
     } else {
       setError("");
       setExistingUser(null);
-      dispatch({ type: "SET_PLAYER", payload: { name: username.trim() } });
+      try {
+        await addData(COLLECTIONS.USERS, {
+          name: trimmedName,
+          createdAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.error("Error during creating user:", err);
+        setError("Cannot create user.");
+        return;
+      }
+
+      dispatch({type: "SET_PLAYER", payload: {name: trimmedName}});
       navigate("/?step=3");
     }
   };
