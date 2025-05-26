@@ -86,7 +86,6 @@ const MultitaskingTest = () => {
       setArrowSide(nextArrowSide);
       setArrowDirection(nextArrowDirection);
       setTrialStart(Date.now());
-      setCursorCells([mouseGrid()]);
     },
     [mode, mouseGrid]
   );
