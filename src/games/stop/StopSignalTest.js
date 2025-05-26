@@ -8,6 +8,9 @@ import SummaryScreen from "./ui/components/SummaryScreen";
 import TutorialScreen from "../common/TutorialScreen";
 import PracticeWrapper from "../common/PracticeWrapper";
 import SoundTestScreen from "./ui/components/SoundTestScreen";
+import {COLLECTIONS} from "../../firebase/firebaseCollections";
+import { addData, fetchWhere } from "../../firebase/firebaseQueries";
+
 
 const MAIN_TRIALS = 15;
 const TEST_TRIALS = 5;
@@ -36,6 +39,91 @@ const StopSignalTest = () => {
     audio.volume = 1;
     beepRef.current = audio;
   }, [selectedSound.url]);
+
+  useEffect(() => {
+    const saveResults = async () => {
+      if (phase !== "summary") return;
+
+      /* 1. szukamy dokumentu usera po nazwie */
+      const users = await fetchWhere(
+          COLLECTIONS.USERS,
+          "name",
+          "==",
+          state.player.name
+      );
+      if (!users || users.length === 0) {
+        console.error("Nie znaleziono użytkownika:", state.player.name);
+        return;
+      }
+
+      /* 2. wyliczamy metryki zbiorcze */
+      const correctCount = results.filter((r) => r.correct).length;
+      const goRTs = results
+          .filter((r) => !r.wasStop && r.correct)
+          .map((r) => r.rt || 0);
+      const totalTime = goRTs.reduce((a, b) => a + b, 0);
+      const avgRT = goRTs.length ? totalTime / goRTs.length : 0;
+
+      /* 3. budujemy wiersze jak w raporcie PDF */
+      const cellLabel = (c) =>
+          c === 1
+              ? selectedLanguage.left
+              : c === 2
+                  ? selectedLanguage.middle
+                  : c === 3
+                      ? selectedLanguage.right
+                      : selectedLanguage.middle;
+      const sideLabel = (s) =>
+          s === "left"
+              ? selectedLanguage.left
+              : s === "right"
+                  ? selectedLanguage.right
+                  : "";
+
+      const rows = results.map((r, i) => {
+        const raw = cursorCells[i];
+        const cellNum = [1, 2, 3].includes(raw) ? raw : 2;
+        const isStopTrial = r.wasStop;
+        return {
+          nr: i + 1,
+          startCell: cellLabel(cellNum),
+          chosen: r.clicked
+              ? sideLabel(r.clicked)
+              : isStopTrial
+                  ? selectedLanguage.wait
+                  : "",
+          correct: isStopTrial ? selectedLanguage.wait : sideLabel(r.correctSide),
+          rt: isStopTrial ? null : r.rt || null, // null = brak
+        };
+      });
+
+      /* 4. zapis do Firestore */
+      const payload = {
+        userId: users[0].id,
+        correctAnswers: correctCount,
+        totalTrials: MAIN_TRIALS,
+        totalTime,
+        averageReactionTime: avgRT,
+        SSD_START: 250,
+        SSD_STEP,
+        SSD_MIN: MIN_SSD,
+        SSD_MAX: MAX_SSD,
+        stopProbability: STOP_PROBABILITY,
+        trials: rows,          // ⬅ szczegóły każdego pytania
+        createdAt: new Date(), // timestamp klienta; można dać serverTimestamp()
+      };
+
+      try {
+        const id = await addData(COLLECTIONS.TEST_STOP_RESULTS, payload);
+        console.log("Stop-Signal zapisany, id:", id);
+      } catch (err) {
+        console.error("Błąd zapisu Stop-Signal:", err);
+      }
+    };
+
+    saveResults();
+  }, [phase]);   //  ← efekt odpali się tylko, gdy phase === "summary"
+
 
   const handleBegin = () => {
     setPhase("main");

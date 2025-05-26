@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { SettingsContext } from "../../settings/SettingsContext";
 import { useGame } from "../../GameProvider";
-import { addData } from "../../firebase/firebaseQueries";
+import {addData, fetchWhere} from "../../firebase/firebaseQueries";
 import { COLLECTIONS } from "../../firebase/firebaseCollections";
 import StartScreen from "./ui/components/StartScreen";
 import MemorizeScreen from "./ui/components/MemorizeScreen";
@@ -62,29 +62,39 @@ const LitwTest = () => {
   }, [phase, currentSymbol]);
 
   useEffect(() => {
-    if (phase !== "summary") return;
+    const saveResults = async () => {
+      if (phase !== "summary") return;
 
-    finishedDateRef.current = new Date();
+      finishedDateRef.current = new Date();
+      const user = await fetchWhere(COLLECTIONS.USERS, "name", "==", state.player.name);
+      if (!user || user.length === 0) {
+        console.error("Cannot find user:", state.player.name);
+        return;
+      }
 
-    const results = {
-      userId: state.player.name,
-      correctAnswers,
-      totalTrials: TOTAL_TRIALS,
-      memoryString,
-      recall: recallInput,
-      memoryScore: calculateMemoryScore(),
-      reactionTimes: rtArr,
-      avgReactionTime: calculateAvgRT(),
-      selectedSymbols,
-      correctSymbols,
-      cursorCells,
-      createdAt: finishedDateRef.current,
+      const results = {
+        userId: user[0].id,
+        correctAnswers,
+        totalTrials: TOTAL_TRIALS,
+        memoryString,
+        recall: recallInput,
+        memoryScore: calculateMemoryScore(),
+        reactionTimes: rtArr,
+        avgReactionTime: calculateAvgRT(),
+        selectedSymbols,
+        correctSymbols,
+        cursorCells,
+        createdAt: finishedDateRef.current,
+      };
+
+      addData(COLLECTIONS.TEST_RESULTS, results)
+          .then((id) => console.log("Saved result id", id))
+          .catch(console.error);
     };
 
-    addData(COLLECTIONS.TEST_RESULTS, results)
-      .then((id) => console.log("Saved result id", id))
-      .catch(console.error);
+    saveResults();
   }, [phase]);
+
 
   const generateMemoryString = () => {
     let str = "";
