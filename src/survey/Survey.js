@@ -6,11 +6,13 @@ import "./Survey.css";
 import { db } from "../firebase/firebaseConfig";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { useGame } from "../GameProvider";
+import {fetchWhere} from "../firebase/firebaseQueries";
+import {COLLECTIONS} from "../firebase/firebaseCollections";
 
 const Survey = () => {
   const { selectedColorScheme, selectedLanguage } = useContext(SettingsContext);
   const navigate = useNavigate();
-  const { dispatch } = useGame();
+  const { state, dispatch } = useGame();
 
   const [form, setForm] = useState({
     age: "",
@@ -50,11 +52,12 @@ const Survey = () => {
       return;
     }
     try {
-      const surveysCol = collection(db, "surveys");
+      const surveysCol = collection(db, COLLECTIONS.SURVEYS);
       const surveyRef = doc(surveysCol);
+      const user = await fetchWhere(COLLECTIONS.USERS, "name", "==", state.player.name);
       await setDoc(surveyRef, {
         id: surveyRef.id,
-        userId: "julia",
+        userId: user[0].id ,
         ...form,
       });
       dispatch({ type: "SET_SURVEY", payload: form });
