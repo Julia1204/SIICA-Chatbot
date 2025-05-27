@@ -10,6 +10,7 @@ const TestScreen = ({
   shapes,
   isTutorialPhase,
   onNextClick,
+  isPracticePhase,
   onShapeLetterSelect,
   onShortcutSelect,
   letters,
@@ -158,22 +159,24 @@ const TestScreen = ({
             {trial} / {maxTrials} {selectedLanguage.completed}
           </p>
 
-          <button
-            className="cognitive-test-button cognitive-test-button-large"
-            onClick={onNextClick}
-            disabled={
-              isTutorialPhase
-                ? false
-                : currentSymbol !== null || trial >= maxTrials
-            }
-            style={{
-              backgroundColor: colorScheme.buttonBackground,
-              color: colorScheme.buttonTextColor,
-              opacity: currentSymbol !== null || trial >= maxTrials ? 0.6 : 1,
-            }}
-          >
-            {selectedLanguage.next}
-          </button>
+          {!isPracticePhase && (
+            <button
+              className="cognitive-test-button cognitive-test-button-large"
+              onClick={onNextClick}
+              disabled={
+                isTutorialPhase
+                  ? false
+                  : currentSymbol !== null || trial >= maxTrials
+              }
+              style={{
+                backgroundColor: colorScheme.buttonBackground,
+                color: colorScheme.buttonTextColor,
+                opacity: currentSymbol !== null || trial >= maxTrials ? 0.6 : 1,
+              }}
+            >
+              {selectedLanguage.next}
+            </button>
+          )}
         </div>
       </div>
     </div>

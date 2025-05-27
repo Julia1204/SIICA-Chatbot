@@ -239,6 +239,7 @@ const LitwTest = () => {
           <TestScreen
             trial={pTrial}
             isTutorialPhase={false}
+            isPracticePhase={true}
             maxTrials={PRACTICE_TRIALS}
             currentSymbol={currentSymbol}
             shortcuts={shortcuts}
