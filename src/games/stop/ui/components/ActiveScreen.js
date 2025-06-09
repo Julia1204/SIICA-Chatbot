@@ -37,8 +37,9 @@ const ActiveScreen = ({
 
     beepTimerRef.current = setTimeout(() => {
       if (stopFlag && beep) {
-        beep.currentTime = 0;
-        beep.play().catch(console.error);
+        const ding = beep.cloneNode();
+        ding.currentTime = 0;
+        ding.play().catch(console.error);
         autoTimerRef.current = setTimeout(() => {
           onDone({
             clicked: false,
