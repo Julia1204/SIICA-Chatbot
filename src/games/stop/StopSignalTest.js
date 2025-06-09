@@ -37,14 +37,13 @@ const StopSignalTest = () => {
   useEffect(() => {
     const audio = new Audio(selectedSound.url);
     audio.volume = 1;
-    audio.preload = "auto";
-    audio.load();
     beepRef.current = audio;
   }, [selectedSound.url]);
 
   useEffect(() => {
     const saveResults = async () => {
       if (phase !== "summary") return;
+
 
       const users = await fetchWhere(
           COLLECTIONS.USERS,
@@ -57,12 +56,14 @@ const StopSignalTest = () => {
         return;
       }
 
+
       const correctCount = results.filter((r) => r.correct).length;
       const goRTs = results
           .filter((r) => !r.wasStop && r.correct)
           .map((r) => r.rt || 0);
       const totalTime = goRTs.reduce((a, b) => a + b, 0);
       const avgRT = goRTs.length ? totalTime / goRTs.length : 0;
+
 
       const cellLabel = (c) =>
           c === 1
@@ -96,6 +97,7 @@ const StopSignalTest = () => {
         };
       });
 
+
       const payload = {
         userId: users[0].id,
         correctAnswers: correctCount,
@@ -107,8 +109,8 @@ const StopSignalTest = () => {
         SSD_MIN: MIN_SSD,
         SSD_MAX: MAX_SSD,
         stopProbability: STOP_PROBABILITY,
-        trials: rows, 
-        createdAt: new Date(),
+        trials: rows,          // ⬅ szczegóły każdego pytania
+        createdAt: new Date(), // timestamp klienta; można dać serverTimestamp()
       };
 
       try {
@@ -201,7 +203,7 @@ const StopSignalTest = () => {
             isTestTrial={true}
             SSD={SSD}
             onDone={onDone}
-            beep={playBeep}
+            beep={beepRef.current}
             stopProbability={STOP_PROBABILITY}
             testAreaRef={testAreaRef}
           />
@@ -282,7 +284,7 @@ const StopSignalTest = () => {
       totalTrials={MAIN_TRIALS}
       SSD={SSD}
       onDone={handleDone}
-      beep={playBeep}
+      beep={beepRef.current}
       stopProbability={STOP_PROBABILITY}
       testAreaRef={testAreaRef}
     />
