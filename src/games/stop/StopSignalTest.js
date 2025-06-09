@@ -42,13 +42,6 @@ const StopSignalTest = () => {
     beepRef.current = audio;
   }, [selectedSound.url]);
 
-  const playBeep = () => {
-    const a = beepRef.current?.cloneNode();
-    if (!a) return;
-    a.play().catch(err => console.warn("playBeep error:", err));
-  };
-
-
   useEffect(() => {
     const saveResults = async () => {
       if (phase !== "summary") return;
