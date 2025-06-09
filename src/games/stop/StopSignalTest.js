@@ -37,14 +37,22 @@ const StopSignalTest = () => {
   useEffect(() => {
     const audio = new Audio(selectedSound.url);
     audio.volume = 1;
+    audio.preload = "auto";
+    audio.load();
     beepRef.current = audio;
   }, [selectedSound.url]);
+
+  const playBeep = () => {
+    const a = beepRef.current?.cloneNode();
+    if (!a) return;
+    a.play().catch(err => console.warn("playBeep error:", err));
+  };
+
 
   useEffect(() => {
     const saveResults = async () => {
       if (phase !== "summary") return;
 
-      /* 1. szukamy dokumentu usera po nazwie */
       const users = await fetchWhere(
           COLLECTIONS.USERS,
           "name",
@@ -56,7 +64,6 @@ const StopSignalTest = () => {
         return;
       }
 
-      /* 2. wyliczamy metryki zbiorcze */
       const correctCount = results.filter((r) => r.correct).length;
       const goRTs = results
           .filter((r) => !r.wasStop && r.correct)
@@ -64,7 +71,6 @@ const StopSignalTest = () => {
       const totalTime = goRTs.reduce((a, b) => a + b, 0);
       const avgRT = goRTs.length ? totalTime / goRTs.length : 0;
 
-      /* 3. budujemy wiersze jak w raporcie PDF */
       const cellLabel = (c) =>
           c === 1
               ? selectedLanguage.left
@@ -97,7 +103,6 @@ const StopSignalTest = () => {
         };
       });
 
-      /* 4. zapis do Firestore */
       const payload = {
         userId: users[0].id,
         correctAnswers: correctCount,
@@ -109,8 +114,8 @@ const StopSignalTest = () => {
         SSD_MIN: MIN_SSD,
         SSD_MAX: MAX_SSD,
         stopProbability: STOP_PROBABILITY,
-        trials: rows,          // ⬅ szczegóły każdego pytania
-        createdAt: new Date(), // timestamp klienta; można dać serverTimestamp()
+        trials: rows, 
+        createdAt: new Date(),
       };
 
       try {
@@ -122,7 +127,7 @@ const StopSignalTest = () => {
     };
 
     saveResults();
-  }, [phase]);   //  ← efekt odpali się tylko, gdy phase === "summary"
+  }, [phase]);
 
 
   const handleBegin = () => {
@@ -203,7 +208,7 @@ const StopSignalTest = () => {
             isTestTrial={true}
             SSD={SSD}
             onDone={onDone}
-            beep={beepRef.current}
+            beep={playBeep}
             stopProbability={STOP_PROBABILITY}
             testAreaRef={testAreaRef}
           />
@@ -284,7 +289,7 @@ const StopSignalTest = () => {
       totalTrials={MAIN_TRIALS}
       SSD={SSD}
       onDone={handleDone}
-      beep={beepRef.current}
+      beep={playBeep}
       stopProbability={STOP_PROBABILITY}
       testAreaRef={testAreaRef}
     />
