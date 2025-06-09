@@ -37,10 +37,10 @@ const StopSignalTest = () => {
   useEffect(() => {
     const audio = new Audio(selectedSound.url);
     audio.volume = 1;
+    audio.preload = "auto";
+    audio.load();
     beepRef.current = audio;
   }, [selectedSound.url]);
-
- 
 
   useEffect(() => {
     const saveResults = async () => {
@@ -201,7 +201,7 @@ const StopSignalTest = () => {
             isTestTrial={true}
             SSD={SSD}
             onDone={onDone}
-            beep={beepRef.current}
+            beep={playBeep}
             stopProbability={STOP_PROBABILITY}
             testAreaRef={testAreaRef}
           />
@@ -282,7 +282,7 @@ const StopSignalTest = () => {
       totalTrials={MAIN_TRIALS}
       SSD={SSD}
       onDone={handleDone}
-      beep={beepRef.current}
+      beep={playBeep}
       stopProbability={STOP_PROBABILITY}
       testAreaRef={testAreaRef}
     />
