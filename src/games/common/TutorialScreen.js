@@ -10,7 +10,7 @@ export default function TutorialScreen({
       style={{
         backgroundColor: selectedColorScheme.backgroundColor,
         color: selectedColorScheme.textColor,
-        height: "93.4vh",
+        height: "95vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

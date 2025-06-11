@@ -33,7 +33,7 @@ const SoundTestScreen = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "93.4vh",
+        height: "95vh",
         textAlign: "center",
         padding: "2rem",
       }}

@@ -16,7 +16,7 @@ const ActiveTest = ({
 }) => {
   const outer = {
     width: "100vw",
-    minHeight: isTestTrial ? "50vh" : "100vh",
+    minHeight: isTestTrial ? "85vh" : "100vh",
     backgroundColor: selectedColorScheme.backgroundColor,
     color: selectedColorScheme.textColor,
     display: "flex",
